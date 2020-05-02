@@ -1,0 +1,15 @@
+<resources>
+    <!-- Main Activity -->
+    <string name="app_name">ChoreApp</string>
+    <string name="label_app_name">Chore App</string>
+    <string name="button_create_household">Create New Household</string>
+
+    <!-- Add Household Activity -->
+    <string name="text_house_name">House Name</string>
+    <string name="text_member_name">Member Name</string>
+    <string name="button_add_member">Add</string>
+    <string name="button_confirm_members">Next</string>
+
+    <!-- Add Chores Activity -->
+
+</resources>
