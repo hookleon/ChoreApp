@@ -11,5 +11,10 @@
     <string name="button_confirm_members">Next</string>
 
     <!-- Add Chores Activity -->
+    <string name="text_chore_list">Chores</string>
+    <string name="button_add_chore">Add</string>
+    <string name="button_confirm_chores">Next</string>
 
+    <!-- Chore List Activity -->
+    <string name="button_settings">Settings</string>
 </resources>
