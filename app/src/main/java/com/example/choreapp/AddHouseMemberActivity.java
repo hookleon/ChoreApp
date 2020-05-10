@@ -22,6 +22,7 @@ public class AddHouseMemberActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddChoresActivity.class);
         EditText editMember = (EditText) findViewById(R.id.editMember);
         String newMember = editMember.getText().toString();
+        // the newMember will take name from editMember and send it to Firebase
         startActivity(intent);
     }
 }
