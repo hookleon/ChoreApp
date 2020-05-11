@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-    //commit test
+
     // Click Create Household button
     public void createHousehold (View view) {
         Intent intent = new Intent(this, AddHouseMemberActivity.class);

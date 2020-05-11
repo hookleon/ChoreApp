@@ -57,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:onClick="addMember"
         android:text="@string/button_add_member"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
@@ -69,8 +70,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="312dp"
         android:layout_marginBottom="16dp"
-        android:onClick="addMember"
+        android:onClick="confirmMembers"
         android:text="@string/button_confirm_members"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="409dp"
+        android:layout_height="494dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editMember"></LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
