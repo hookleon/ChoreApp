@@ -3,23 +3,33 @@ package com.example.choreapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class AddHouseMemberActivity extends AppCompatActivity {
+
+    // Will display names of house members
+    ArrayList<String> members = new ArrayList<>();
+
+    // Place to store names of house members
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,23 +39,27 @@ public class AddHouseMemberActivity extends AppCompatActivity {
         Intent intent = getIntent();
     }
 
-    ArrayList<TextView> memberDisplay = new ArrayList<>();
-    //Can't figure out linear layout, keeps crashing
-    //LinearLayout linear = (LinearLayout) findViewById(R.id.linear);
-
-    // Adds name from
+    // Adds name from the textbox
     public void addMember (View view) {
         // When clicked, the text will be taken and added as a name of a person in household
         // the newMember will take name from editMember and send it to Firebase
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView);
+        //RecyclerView.Adapter recAdapt = new
+
         EditText editMember = (EditText) findViewById(R.id.editMember);
         String newMember = editMember.getText().toString();
-        TextView n = new TextView(this);
-        n.setText(newMember);
-        //memberDisplay.add(n);
-        //linear.addView(memberDisplay[n]);
+        members.add(newMember);
+
+        //recView.
     }
 
     public void confirmMembers (View view) {
+        //Adds all members under the name of new household
+        EditText editHouse = (EditText) findViewById(R.id.editHouse);
+        String house = editHouse.getText().toString();
+
+        mRef.child("users").setValue(members);
+
         // Moves to the next page where you pick chores
         Intent intent = new Intent(this, AddChoresActivity.class);
         startActivity(intent);
