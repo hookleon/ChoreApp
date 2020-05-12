@@ -21,15 +21,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AddHouseMemberActivity extends AppCompatActivity {
 
     // Will display names of house members
-    ArrayList<String> members = new ArrayList<>();
+    private ArrayList<String> members = new ArrayList<>();;
 
-    // Place to store names of house members
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mRef = database.getReference();
+    //links the app to the database stored on firebase
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mRef = database.getReference();
+
+    //house id, this allows every member to store this id that is unique to their household
+    private String houseID = UUID.randomUUID().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,13 @@ public class AddHouseMemberActivity extends AppCompatActivity {
 
         EditText editMember = (EditText) findViewById(R.id.editMember);
         String newMember = editMember.getText().toString();
-        members.add(newMember);
 
-        //recView.
+        //each member gets a unique id
+        String memberID = UUID.randomUUID().toString();
+        members.add(memberID);
+
+        mRef.child("users").child(memberID).child("name").setValue(newMember);
+        mRef.child("users").child(memberID).child("group").setValue(houseID);
     }
 
     public void confirmMembers (View view) {
@@ -58,10 +66,18 @@ public class AddHouseMemberActivity extends AppCompatActivity {
         EditText editHouse = (EditText) findViewById(R.id.editHouse);
         String house = editHouse.getText().toString();
 
-        mRef.child("groups").child("members").setValue(members);
-        mRef.child("groups").child("name").setValue(house);
+        mRef.child("groups").child(houseID).child("members").setValue(members);
+        mRef.child("groups").child(houseID).child("name").setValue(house);
         // Moves to the next page where you pick chores
         Intent intent = new Intent(this, AddChoresActivity.class);
         startActivity(intent);
+    }
+
+    public void createList() {
+
+    }
+
+    public void buildRecyclerView() {
+
     }
 }
