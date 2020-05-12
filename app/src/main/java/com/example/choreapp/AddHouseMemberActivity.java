@@ -58,8 +58,8 @@ public class AddHouseMemberActivity extends AppCompatActivity {
         EditText editHouse = (EditText) findViewById(R.id.editHouse);
         String house = editHouse.getText().toString();
 
-        mRef.child("users").setValue(members);
-
+        mRef.child("groups").child("members").setValue(members);
+        mRef.child("groups").child("name").setValue(house);
         // Moves to the next page where you pick chores
         Intent intent = new Intent(this, AddChoresActivity.class);
         startActivity(intent);
