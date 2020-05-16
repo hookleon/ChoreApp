@@ -1,29 +1,21 @@
 package com.example.choreapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AddHouseMemberActivity extends AppCompatActivity {
+public class AddHouseMemberActivity extends AppCompatActivity{
 
     // Will display names of house members
     private ArrayList<String> members = new ArrayList<>();;
@@ -34,6 +26,7 @@ public class AddHouseMemberActivity extends AppCompatActivity {
 
     //house id, this allows every member to store this id that is unique to their household
     private String houseID = UUID.randomUUID().toString();
+    public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  //Passes houseid to next activity so chores can be added to activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +40,20 @@ public class AddHouseMemberActivity extends AppCompatActivity {
     public void addMember (View view) {
         // When clicked, the text will be taken and added as a name of a person in household
         // the newMember will take name from editMember and send it to Firebase
-        RecyclerView recView = (RecyclerView) findViewById(R.id.recView);
-        //RecyclerView.Adapter recAdapt = new
-
         EditText editMember = (EditText) findViewById(R.id.editMember);
         String newMember = editMember.getText().toString();
 
         //each member gets a unique id
         String memberID = UUID.randomUUID().toString();
         members.add(memberID);
+
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView);
+
+        LinearLayoutManager recLayout = new LinearLayoutManager(this);
+        recView.setLayoutManager(recLayout);
+        //String[] shit = {"stuff","more stuff","even more stuff"};
+        //MyAdapter adapter = new MyAdapter(shit);
+        //recView.setAdapter(adapter);
 
         mRef.child("users").child(memberID).child("name").setValue(newMember);
         mRef.child("users").child(memberID).child("group").setValue(houseID);
@@ -70,14 +68,7 @@ public class AddHouseMemberActivity extends AppCompatActivity {
         mRef.child("groups").child(houseID).child("name").setValue(house);
         // Moves to the next page where you pick chores
         Intent intent = new Intent(this, AddChoresActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
         startActivity(intent);
-    }
-
-    public void createList() {
-
-    }
-
-    public void buildRecyclerView() {
-
     }
 }

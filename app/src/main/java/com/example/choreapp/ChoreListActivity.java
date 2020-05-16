@@ -11,4 +11,6 @@ public class ChoreListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_list);
     }
+
+    // Need code to add each member of household as a viewable text with their chore for the week next to them
 }
