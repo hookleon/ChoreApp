@@ -1,6 +1,10 @@
 package com.example.choreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +27,9 @@ public class AddChoresActivity extends AppCompatActivity {
 
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String houseID;
-    private ArrayList<String> choresToAllocate = new ArrayList<>();
+    private List<String> choresToAllocate = new ArrayList<>();
+    private RecyclerView recView;
+    private AddChoreAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,15 @@ public class AddChoresActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
+
+        // RecView stuff
+        recView = (RecyclerView) findViewById(R.id.recView2);
+        LinearLayoutManager recLayout = new LinearLayoutManager(this);
+        recView.setLayoutManager(recLayout);
+        recView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new AddChoreAdapter(choresToAllocate);
+        recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recView.setAdapter(adapter);
     }
 
     public void addChore (View view){
@@ -39,12 +54,24 @@ public class AddChoresActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         String chore = spinner.getSelectedItem().toString();
-        choresToAllocate.add(chore);
+
+        // Checks that chore hasn't already been added
+        Boolean add = Boolean.TRUE;
+        for(int i = 0; i < choresToAllocate.size(); i++) {
+            if (choresToAllocate.get(i) == chore) {
+                add = Boolean.FALSE;
+            }
+        }
+        if (add == Boolean.TRUE) {
+            choresToAllocate.add(chore);
+            adapter.notifyDataSetChanged();   //This updates the recyclerView
+        }
     }
 
     public void confirmChores (View view) {
-        mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
+        //mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
         Intent intent = new Intent(this, ChoreListActivity.class);
+        intent.putExtra(HOUSE_ID,houseID);
         startActivity(intent);
     }
 }
