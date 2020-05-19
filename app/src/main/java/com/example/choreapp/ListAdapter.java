@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 // This adapter allows the app to display names of users when adding names to the household
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     private List<Member> mDataset;
 
     // Provide a reference to the views for each data item
@@ -18,16 +18,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView name;
+        public TextView name, chore;
 
         public MyViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.name);
+            chore = (TextView) v.findViewById(R.id.chore);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Member> myDataset) {
+    public ListAdapter(List<Member> myDataset) {
         mDataset = myDataset;
     }
 
@@ -46,6 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - replace the contents of the view with that element
         Member m = mDataset.get(position);
         holder.name.setText(m.getName());
+        holder.chore.setText(m.getChores().toString());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

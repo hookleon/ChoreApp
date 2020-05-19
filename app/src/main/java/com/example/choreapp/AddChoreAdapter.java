@@ -21,7 +21,7 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
         public TextView chore;
         public MyViewHolder(View v) {
             super(v);
-            chore = (TextView) v.findViewById(R.id.name);
+            chore = (TextView) v.findViewById(R.id.chore);
         }
     }
 

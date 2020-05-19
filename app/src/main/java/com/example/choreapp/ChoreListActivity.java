@@ -1,6 +1,9 @@
 package com.example.choreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -11,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ChoreListActivity extends AppCompatActivity {
 
@@ -18,9 +22,14 @@ public class ChoreListActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
 
+    public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
+    public String houseID;
+
+    private List<Member> members = new ArrayList<>();
     private List<String> choresToAllocate = new ArrayList<>();
+
     private RecyclerView recView;
-    private AddChoreAdapter adapter;
+    private ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +37,42 @@ public class ChoreListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chore_list);
 
         Intent intent = getIntent();
-        String houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
+        houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
+
+        // RecView stuff
+        recView = (RecyclerView) findViewById(R.id.recView3);
+        LinearLayoutManager recLayout = new LinearLayoutManager(this);
+        recView.setLayoutManager(recLayout);
+        recView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new ListAdapter(members);
+        recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recView.setAdapter(adapter);
+
+        this.assignChores();
+
     }
 
     public void assignChores() {
-        //choresToAllocate
+        // test code
+        choresToAllocate.add("Dishes");
+        choresToAllocate.add("Rubbish");
+        choresToAllocate.add("Vacuum");
+        choresToAllocate.add("Toilet");
+
+        members.add(new Member("Anna", "", ""));
+        members.add(new Member("Bobby", "", ""));
+        members.add(new Member("Cameron", "", ""));
+
+        // Randomly assigns chores to members
+        Random rand = new Random();
+        int r;
+
+        // allocate chores
+        for (int i = 0; i < choresToAllocate.size(); i++) {
+            r = rand.nextInt(members.size());
+            members.get(r).addChore(choresToAllocate.get(i));
+        }
+        adapter.notifyDataSetChanged();
     }
     // Need code to add each member of household as a viewable text with their chore for the week next to them
 }
