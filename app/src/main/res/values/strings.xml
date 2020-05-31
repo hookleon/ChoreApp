@@ -14,7 +14,14 @@
     <string name="text_chore_list">Chores</string>
     <string name="button_add_chore">Add</string>
     <string name="button_confirm_chores">Next</string>
+    <string-array name="chores_array">
+        <item>Dishes</item>
+        <item>Rubbish</item>
+        <item>Toilet</item>
+        <item>Vacuum</item>
+    </string-array>
 
     <!-- Chore List Activity -->
     <string name="button_settings">Settings</string>
+
 </resources>
