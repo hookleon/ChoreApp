@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +58,7 @@ public class ChoreListActivity extends AppCompatActivity {
         recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recView.setAdapter(adapter);
 
-        /*mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
@@ -67,29 +68,33 @@ public class ChoreListActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
-
-        this.assignChores();
+        });
     }
 
     private void showData(DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds: dataSnapshot.child("groups").child(houseID).child("members").getChildren()) {
-            String uid = ds.getValue().toString();
-            TextView tv = findViewById(R.id.textView6);
-            tv.setText(uid);
+        DataSnapshot ds = dataSnapshot.child("groups").child(houseID).child("members");
+        long n = ds.getChildrenCount();
+        String name = "";
+        String id = "";
+        String hid = "";
+        for (int i = 0; i < n; i++){
+            name = ds.child(String.valueOf(i)).child("name").getValue().toString();
+            id = ds.child(String.valueOf(i)).child("id").getValue().toString();
+            hid = ds.child(String.valueOf(i)).child("houseID").getValue().toString();
+            members.add(new Member(name,id,hid));
         }
     }
 
-    public void assignChores() {
+    public void assignChores(View view) {
         // test code
         choresToAllocate.add("Dishes");
         choresToAllocate.add("Rubbish");
         choresToAllocate.add("Vacuum");
         choresToAllocate.add("Toilet");
 
-        members.add(new Member("Anna", "", ""));
-        members.add(new Member("Bobby", "", ""));
-        members.add(new Member("Cameron", "", ""));
+        //members.add(new Member("Anna", "", ""));
+        //members.add(new Member("Bobby", "", ""));
+        //members.add(new Member("Cameron", "", ""));
 
         // Randomly assigns chores to members
         Random rand = new Random();
