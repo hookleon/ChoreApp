@@ -44,4 +44,4 @@ public class Member {
     public void addChore(String chore) {
         this.chores.add(chore);
     }
-}
+} // Magnus McGee again
