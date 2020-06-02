@@ -67,19 +67,21 @@ public class AddHouseMemberActivity extends AppCompatActivity{
 
         members.add(new Member(name,id,houseID));
         adapter.notifyDataSetChanged();   //This updates the recyclerView
-
-        mRef.child("users").child(id).child("name").setValue(name);
-        mRef.child("users").child(id).child("group").setValue(houseID);
     }
 
     public void confirmMembers (View view) {
         //Adds all members under the name of new household
         EditText editHouse = (EditText) findViewById(R.id.editHouse);
         String house = editHouse.getText().toString();
-        //for (int i = 0; i < members.size(); i++){
-            mRef.child("groups").child(houseID).child("members").setValue(members);
-        //}
+
+        mRef.child("groups").child(houseID).child("members").setValue(members);
         mRef.child("groups").child(houseID).child("name").setValue(house);
+
+        for (int i = 0; i < members.size(); i++){
+            mRef.child("users").child(members.get(i).getID()).setValue(members.get(i));
+            //mRef.child("users").child(members.get(i).getID()).child("group").setValue(members.get(i).getHouseID());
+        }
+
         // Moves to the next page where you pick chores
         Intent intent = new Intent(this, AddChoresActivity.class);
         intent.putExtra(HOUSE_ID, houseID);

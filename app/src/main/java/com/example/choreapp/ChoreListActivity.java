@@ -72,29 +72,41 @@ public class ChoreListActivity extends AppCompatActivity {
     }
 
     private void showData(DataSnapshot dataSnapshot) {
-        DataSnapshot ds = dataSnapshot.child("groups").child(houseID).child("members");
-        long n = ds.getChildrenCount();
+        DataSnapshot dsMems = dataSnapshot.child("groups").child(houseID).child("members");
+        DataSnapshot dsChores = dataSnapshot.child("groups").child(houseID).child("chores");
+
+        long nMems = dsMems.getChildrenCount();
+        long nChores = dsChores.getChildrenCount();
+
         String name = "";
         String id = "";
         String hid = "";
-        for (int i = 0; i < n; i++){
-            name = ds.child(String.valueOf(i)).child("name").getValue().toString();
-            id = ds.child(String.valueOf(i)).child("id").getValue().toString();
-            hid = ds.child(String.valueOf(i)).child("houseID").getValue().toString();
+        //Gets member names and info from database
+        for (int i = 0; i < nMems; i++){
+            name = dsMems.child(String.valueOf(i)).child("name").getValue().toString();
+            id = dsMems.child(String.valueOf(i)).child("id").getValue().toString();
+            hid = dsMems.child(String.valueOf(i)).child("houseID").getValue().toString();
             members.add(new Member(name,id,hid));
+        }
+
+        String chores = "";
+        //Gets chores to allocate from database
+        for(int i = 0; i < nChores; i++){
+            chores = dsChores.child(String.valueOf(i)).getValue().toString();
+            choresToAllocate.add(chores);
         }
     }
 
     public void assignChores(View view) {
         // test code
-        choresToAllocate.add("Dishes");
+        /*choresToAllocate.add("Dishes");
         choresToAllocate.add("Rubbish");
         choresToAllocate.add("Vacuum");
         choresToAllocate.add("Toilet");
 
-        //members.add(new Member("Anna", "", ""));
-        //members.add(new Member("Bobby", "", ""));
-        //members.add(new Member("Cameron", "", ""));
+        members.add(new Member("Anna", "", ""));
+        members.add(new Member("Bobby", "", ""));
+        members.add(new Member("Cameron", "", ""));*/
 
         // Randomly assigns chores to members
         Random rand = new Random();
