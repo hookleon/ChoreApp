@@ -3,6 +3,7 @@ package com.example.choreapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +20,12 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView chore;
+        public ImageButton remove;
+
         public MyViewHolder(View v) {
             super(v);
             chore = (TextView) v.findViewById(R.id.chore);
+            remove = (ImageButton) v.findViewById(R.id.remove);
         }
     }
 
@@ -40,11 +44,21 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         String m = mDataset.get(position);
         holder.chore.setText(m);
+
+        holder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //String itemLabel = mDataset.get(position).getName();
+                mDataset.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,mDataset.size());
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -18,12 +18,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     // you provide access to all the views for a data item in a view holder
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView name, chore;
+        public TextView name, chores;
 
         public MyViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.name);
-            chore = (TextView) v.findViewById(R.id.chore);
+            chores = (TextView) v.findViewById(R.id.chores);
         }
     }
 
@@ -36,7 +36,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_row, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chore_list_row, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -47,7 +47,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         // - replace the contents of the view with that element
         Member m = mDataset.get(position);
         holder.name.setText(m.getName());
-        holder.chore.setText(m.getChores().toString());
+        List<String> chores = m.getChores();
+        String choresText = "";
+        for(int i = 0; i < chores.size(); i++){
+            //add coma if it has more chores
+            if(i == chores.size() - 1){
+                choresText += chores.get(i);
+            } else {
+                choresText += chores.get(i) + ", ";
+            }
+        }
+        holder.chores.setText(choresText);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
