@@ -120,4 +120,10 @@ public class ChoreListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
     // Need code to add each member of household as a viewable text with their chore for the week next to them
-}
+
+    public void settings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+    }
+

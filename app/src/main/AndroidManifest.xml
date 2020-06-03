@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChoreListActivity"></activity>
+        <activity android:name=".SettingsActivity"/>
+            <!-- android:parentActivityName=".ChoreListActivity">
+            <!- The meta-data tag is required if you support API level 15 and lower -->
+            <!--<meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ChoreListActivity" />
+        -->
+        <!--</activity>-->
+
+        <activity android:name=".ChoreListActivity" />
         <activity android:name=".AddChoresActivity" />
         <activity android:name=".AddHouseMemberActivity" />
         <activity android:name=".MainActivity">
