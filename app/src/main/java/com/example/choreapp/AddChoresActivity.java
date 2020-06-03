@@ -72,6 +72,7 @@ public class AddChoresActivity extends AppCompatActivity {
         mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
         Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID,houseID);
+        intent.setAction("create");
         startActivity(intent);
     }
 }
