@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//testing Tiaan
 public class MainActivity extends AppCompatActivity {
 
     //links the app to the database stored on firebase
@@ -33,5 +34,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Leon Hook
+
+
+
 }

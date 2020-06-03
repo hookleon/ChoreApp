@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -69,10 +71,19 @@ public class AddChoresActivity extends AppCompatActivity {
     }
 
     public void confirmChores (View view) {
-        mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
-        Intent intent = new Intent(this, ChoreListActivity.class);
-        intent.putExtra(HOUSE_ID,houseID);
-        intent.setAction("create");
-        startActivity(intent);
+        if (choresToAllocate.size() < 1) {
+            Context context = getApplicationContext();
+            CharSequence text = "No chores please try again";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        } else {
+
+            mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
+            Intent intent = new Intent(this, ChoreListActivity.class);
+            intent.putExtra(HOUSE_ID, houseID);
+            startActivity(intent);
+        }
+
     }
 }

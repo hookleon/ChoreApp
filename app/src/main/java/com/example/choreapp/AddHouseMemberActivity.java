@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -73,18 +75,27 @@ public class AddHouseMemberActivity extends AppCompatActivity{
         //Adds all members under the name of new household
         EditText editHouse = (EditText) findViewById(R.id.editHouse);
         String house = editHouse.getText().toString();
+        if (members.size() != 0) {
+            mRef.child("groups").child(houseID).child("members").setValue(members);
+            mRef.child("groups").child(houseID).child("name").setValue(house);
 
-        mRef.child("groups").child(houseID).child("members").setValue(members);
-        mRef.child("groups").child(houseID).child("name").setValue(house);
+            for (int i = 0; i < members.size(); i++) {
+                mRef.child("users").child(members.get(i).getID()).setValue(members.get(i));
+                //mRef.child("users").child(members.get(i).getID()).child("group").setValue(members.get(i).getHouseID());
+            }
 
-        for (int i = 0; i < members.size(); i++){
-            mRef.child("users").child(members.get(i).getID()).setValue(members.get(i));
-            //mRef.child("users").child(members.get(i).getID()).child("group").setValue(members.get(i).getHouseID());
+            // Moves to the next page where you pick chores
+            Intent intent = new Intent(this, AddChoresActivity.class);
+            intent.putExtra(HOUSE_ID, houseID);
+            startActivity(intent);
         }
+        else{
+            Context context = getApplicationContext();
+            CharSequence text = "No members please try again";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
-        // Moves to the next page where you pick chores
-        Intent intent = new Intent(this, AddChoresActivity.class);
-        intent.putExtra(HOUSE_ID, houseID);
-        startActivity(intent);
+        }
     }
 }
