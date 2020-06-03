@@ -84,5 +84,6 @@ public class AddChoresActivity extends AppCompatActivity {
             intent.putExtra(HOUSE_ID, houseID);
             startActivity(intent);
         }
+
     }
 }

@@ -46,8 +46,13 @@ public class ChoreListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_list);
 
+        //House ID can come from two different activities, new group or preexisting group
         Intent intent = getIntent();
-        houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
+        if(intent.getAction() == "create") {
+            houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
+        } else if(intent.getAction() == "login") {
+            houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
+        }
 
         // RecView stuff
         recView = (RecyclerView) findViewById(R.id.recView3);
@@ -83,31 +88,21 @@ public class ChoreListActivity extends AppCompatActivity {
         String hid = "";
         //Gets member names and info from database
         for (int i = 0; i < nMems; i++){
-            name = dsMems.child(String.valueOf(i)).child("name").getValue().toString();
-            id = dsMems.child(String.valueOf(i)).child("id").getValue().toString();
-            hid = dsMems.child(String.valueOf(i)).child("houseID").getValue().toString();
+            name = dsMems.child(String.valueOf(i)).child("name").getValue(String.class);
+            id = dsMems.child(String.valueOf(i)).child("id").getValue(String.class);
+            hid = dsMems.child(String.valueOf(i)).child("houseID").getValue(String.class);
             members.add(new Member(name,id,hid));
         }
 
         String chores = "";
         //Gets chores to allocate from database
         for(int i = 0; i < nChores; i++){
-            chores = dsChores.child(String.valueOf(i)).getValue().toString();
+            chores = dsChores.child(String.valueOf(i)).getValue(String.class);
             choresToAllocate.add(chores);
         }
     }
 
     public void assignChores(View view) {
-        // test code
-        /*choresToAllocate.add("Dishes");
-        choresToAllocate.add("Rubbish");
-        choresToAllocate.add("Vacuum");
-        choresToAllocate.add("Toilet");
-
-        members.add(new Member("Anna", "", ""));
-        members.add(new Member("Bobby", "", ""));
-        members.add(new Member("Cameron", "", ""));*/
-
         // Randomly assigns chores to members
         Random rand = new Random();
         int r;
