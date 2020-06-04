@@ -106,14 +106,14 @@ public class ChoreListActivity extends AppCompatActivity {
         // Randomly assigns chores to members
         Random rand = new Random();
         int r;
-
-        // allocate chores
-        for (int i = 0; i < choresToAllocate.size(); i++) {
-            r = rand.nextInt(members.size());
-            members.get(r).addChore(choresToAllocate.get(i));
+            // allocate chores
+            for (int i = 0; i < choresToAllocate.size(); i++) {
+                r = rand.nextInt(members.size());
+                members.get(r).addChore(choresToAllocate.get(i));
+            }
+            adapter.notifyDataSetChanged();
         }
-        adapter.notifyDataSetChanged();
-    }
+
     // Need code to add each member of household as a viewable text with their chore for the week next to them
 
     public void settings(View view) {
