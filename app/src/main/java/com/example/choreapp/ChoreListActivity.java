@@ -77,21 +77,34 @@ public class ChoreListActivity extends AppCompatActivity {
     }
 
     private void showData(DataSnapshot dataSnapshot) {
+        //clears both members and chores to allocate so they can be updated from the database
+        members.clear();
+        choresToAllocate.clear();
+
         DataSnapshot dsMems = dataSnapshot.child("groups").child(houseID).child("members");
         DataSnapshot dsChores = dataSnapshot.child("groups").child(houseID).child("chores");
-
+        DataSnapshot dsMemChores;
         long nMems = dsMems.getChildrenCount();
         long nChores = dsChores.getChildrenCount();
+        long nMemChores;
 
         String name = "";
         String id = "";
         String hid = "";
+        List<String> memberChores = new ArrayList<>();
+
         //Gets member names and info from database
         for (int i = 0; i < nMems; i++){
             name = dsMems.child(String.valueOf(i)).child("name").getValue(String.class);
             id = dsMems.child(String.valueOf(i)).child("id").getValue(String.class);
             hid = dsMems.child(String.valueOf(i)).child("houseID").getValue(String.class);
             members.add(new Member(name,id,hid));
+
+            nMemChores = dsMems.child(String.valueOf(i)).child("chores").getChildrenCount();
+            for(int k = 0; k < nMemChores; k++){
+                dsMemChores = dsMems.child(String.valueOf(i)).child("chores");
+                members.get(i).addChore(dsMemChores.child(String.valueOf(k)).getValue(String.class));
+            }
         }
 
         String chores = "";
@@ -100,6 +113,7 @@ public class ChoreListActivity extends AppCompatActivity {
             chores = dsChores.child(String.valueOf(i)).getValue(String.class);
             choresToAllocate.add(chores);
         }
+        adapter.notifyDataSetChanged();
     }
 
     public void assignChores(View view) {
@@ -107,12 +121,25 @@ public class ChoreListActivity extends AppCompatActivity {
         Random rand = new Random();
         int r;
 
+        // remove all previous chores before allocating chores
+        //mRef.child("groups").child(houseID).child("members").removeValue();
+        for (int i = 0; i < members.size(); i++) {
+            members.get(i).resetChores();
+        }
+
         // allocate chores
         for (int i = 0; i < choresToAllocate.size(); i++) {
             r = rand.nextInt(members.size());
             members.get(r).addChore(choresToAllocate.get(i));
         }
-        adapter.notifyDataSetChanged();
+        // if member has no chores, they get Nothing
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getChores().isEmpty()) {
+                members.get(i).addChore("Nothing");
+            }
+        }
+        mRef.child("groups").child(houseID).child("members").setValue(members);
+
     }
     // Need code to add each member of household as a viewable text with their chore for the week next to them
 
@@ -120,5 +147,5 @@ public class ChoreListActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
-    }
+}
 

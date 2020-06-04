@@ -68,6 +68,7 @@ public class AddHouseMemberActivity extends AppCompatActivity{
         String id = UUID.randomUUID().toString();
 
         members.add(new Member(name,id,houseID));
+        members.get(members.size()-1).addChore("Nothing");
         adapter.notifyDataSetChanged();   //This updates the recyclerView
     }
 
@@ -81,6 +82,8 @@ public class AddHouseMemberActivity extends AppCompatActivity{
 
             for (int i = 0; i < members.size(); i++) {
                 mRef.child("users").child(members.get(i).getID()).setValue(members.get(i));
+                //mRef.child("users").child(members.get(i).getID()).child(String.valueOf(i)).child("chores").setValue(members.get(i).getChores());
+                //mRef.child("groups").child(houseID).child("members").child(String.valueOf(i)).setValue(members.get(i).getChores());
                 //mRef.child("users").child(members.get(i).getID()).child("group").setValue(members.get(i).getHouseID());
             }
 
