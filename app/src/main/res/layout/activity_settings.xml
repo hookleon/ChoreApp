@@ -9,42 +9,25 @@
     tools:context=".SettingsActivity">
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/edit_members_button"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="80dp"
-        android:text="Add Members"
+        android:layout_marginTop="212dp"
+        android:onClick="editMembers"
+        android:text="Edit Members"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/edit_chores_button"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="40dp"
-        android:text="Remove Members"
+        android:layout_marginTop="80dp"
+        android:onClick="editChores"
+        android:text="Edit Chores "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button12" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_members_button" />
 
-    <Button
-        android:id="@+id/button14"
-        android:layout_width="195dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="40dp"
-        android:text="Add Chores "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button13" />
-
-    <Button
-        android:id="@+id/button15"
-        android:layout_width="195dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="40dp"
-        android:text="Remove Chores"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button14" />
 </androidx.constraintlayout.widget.ConstraintLayout>

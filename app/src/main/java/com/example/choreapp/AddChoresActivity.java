@@ -78,7 +78,6 @@ public class AddChoresActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         } else {
-
             mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
             Intent intent = new Intent(this, ChoreListActivity.class);
             intent.putExtra(HOUSE_ID, houseID);
