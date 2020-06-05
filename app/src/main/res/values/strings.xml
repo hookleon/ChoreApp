@@ -1,7 +1,7 @@
 <resources>
     <!-- Main Activity -->
-    <string name="app_name">Chore App</string>
-    <string name="label_app_name">Chore App</string>
+    <string name="app_name">Chore Roulette</string>
+    <string name="label_app_name">Chore Roulette</string>
     <string name="button_create_household">Create New Household</string>
     <string name="button_login_household">Login To Household</string>
 
