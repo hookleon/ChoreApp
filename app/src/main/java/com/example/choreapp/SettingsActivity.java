@@ -19,20 +19,24 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
-
-        TextView textView = (TextView) findViewById(R.id.textView8);
-        textView.setText(houseID);
     }
 
-    public void editChores(View view) {
+    /*public void editChores(View view) {
         Intent intent = new Intent(this, AddChoresActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     public void editMembers(View view) {
         Intent intent = new Intent(this, EditHouseMemberActivity.class);
         intent.putExtra(HOUSE_ID, houseID);
         intent.setAction("edit");
+        startActivity(intent);
+    }
+
+    public void back(View view){
+        Intent intent = new Intent(this, ChoreListActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
+        intent.setAction("settings");
         startActivity(intent);
     }
 }
