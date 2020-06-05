@@ -1,8 +1,9 @@
 <resources>
     <!-- Main Activity -->
-    <string name="app_name">ChoreApp</string>
+    <string name="app_name">Chore App</string>
     <string name="label_app_name">Chore App</string>
     <string name="button_create_household">Create New Household</string>
+    <string name="button_login_household">Login To Household</string>
 
     <!-- Login Activity -->
     <string name="text_house_id">House ID</string>

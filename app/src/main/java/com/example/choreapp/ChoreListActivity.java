@@ -98,7 +98,6 @@ public class ChoreListActivity extends AppCompatActivity {
         String name = "";
         String id = "";
         String hid = "";
-        List<String> memberChores = new ArrayList<>();
 
         //Gets member names and info from database
         for (int i = 0; i < nMems; i++){
