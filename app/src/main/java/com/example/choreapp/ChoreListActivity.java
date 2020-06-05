@@ -90,6 +90,10 @@ public class ChoreListActivity extends AppCompatActivity {
         members.clear();
         choresToAllocate.clear();
 
+        TextView textHouseName = (TextView) findViewById(R.id.textHouseName);
+        String houseName = dataSnapshot.child("groups").child(houseID).child("name").getValue(String.class);
+        textHouseName.setText(houseName);
+
         DataSnapshot dsMems = dataSnapshot.child("groups").child(houseID).child("members");
         DataSnapshot dsChores = dataSnapshot.child("groups").child(houseID).child("chores");
         DataSnapshot dsMemChores;
