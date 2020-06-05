@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
@@ -20,15 +21,22 @@ public class SettingsActivity extends AppCompatActivity {
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
     }
 
-    public void editChores(View view) {
+    /*public void editChores(View view) {
         Intent intent = new Intent(this, AddChoresActivity.class);
+        startActivity(intent);
+    }*/
+
+    public void editMembers(View view) {
+        Intent intent = new Intent(this, EditHouseMemberActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
+        intent.setAction("edit");
         startActivity(intent);
     }
 
-    public void editMembers(View view) {
-        Intent intent = new Intent(this, AddHouseMemberActivity.class);
+    public void back(View view){
+        Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID, houseID);
-        intent.setAction("edit");
+        intent.setAction("settings");
         startActivity(intent);
     }
 }

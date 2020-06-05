@@ -10,15 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan|stateHidden">
-        <activity android:name=".SettingsActivity"/>
-            <!-- android:parentActivityName=".ChoreListActivity">
-            <!- The meta-data tag is required if you support API level 15 and lower -->
-            <!--<meta-data
+        <activity android:name=".EditHouseMemberActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <!--
+ android:parentActivityName=".ChoreListActivity">
+            <!- The meta-data tag is required if you support API level 15 and lower
+        -->
+        <!--
+<meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ChoreListActivity" />
         -->
-        <!--</activity>-->
-        <activity android:name=".LoadingActivity"></activity>
+        <!-- </activity> -->
+        <activity android:name=".LoadingActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChoreListActivity" />
         <activity android:name=".AddChoresActivity" />

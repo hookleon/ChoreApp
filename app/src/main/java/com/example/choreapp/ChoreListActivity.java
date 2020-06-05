@@ -50,12 +50,14 @@ public class ChoreListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_list);
 
-        //House ID can come from two different activities, new group or preexisting group
+        //House ID can come from multiple different activities, new group or preexisting group
         Intent intent = getIntent();
         if(intent.getAction() == "create") {
             houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
         } else if(intent.getAction() == "login") {
             houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
+        } else if(intent.getAction() == "settings") {
+            houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
         }
 
         TextView textHID = findViewById(R.id.textHID);
@@ -151,6 +153,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
     public void settings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
         startActivity(intent);
     }
 
