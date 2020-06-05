@@ -24,7 +24,7 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
 
         public MyViewHolder(View v) {
             super(v);
-            chore = (TextView) v.findViewById(R.id.chore);
+            chore = (TextView) v.findViewById(R.id.name);
             remove = (ImageButton) v.findViewById(R.id.remove);
         }
     }

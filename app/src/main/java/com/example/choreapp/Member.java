@@ -44,4 +44,7 @@ public class Member {
     public void addChore(String chore) {
         this.chores.add(chore);
     }
+
+    public void resetChores() { this.chores.clear(); }
+
 }
