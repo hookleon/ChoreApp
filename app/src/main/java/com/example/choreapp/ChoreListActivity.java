@@ -151,6 +151,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
     public void settings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
         startActivity(intent);
     }
 

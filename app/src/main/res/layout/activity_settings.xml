@@ -30,4 +30,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_members_button" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="132dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
