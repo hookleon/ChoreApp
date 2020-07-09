@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//test
 public class Member {
     private String name, id, houseID;
     private List<String> chores;
