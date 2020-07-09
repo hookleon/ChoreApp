@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches:  origin
+    branches: [ '*', '!master' ]
 
 jobs:
   build:
