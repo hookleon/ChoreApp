@@ -9,7 +9,7 @@ import java.util.List;
 public class Member {
     private String name, id, houseID;
     private List<String> chores;
-    //test
+
     public Member(String name, String id, String houseID) {
         this.name = name;
         this.id = id;
@@ -44,4 +44,7 @@ public class Member {
     public void addChore(String chore) {
         this.chores.add(chore);
     }
-} // Magnus McGee again
+
+    public void resetChores() { this.chores.clear(); }
+
+}
