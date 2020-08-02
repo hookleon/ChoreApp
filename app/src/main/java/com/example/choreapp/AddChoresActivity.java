@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,8 +58,29 @@ public class AddChoresActivity extends AppCompatActivity {
     public void addChore (View view){
         //Need code that will add selected chore to the list of chores house will use
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        final String chore = spinner.getSelectedItem().toString();
 
-        String chore = spinner.getSelectedItem().toString();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText choreIn = new EditText(this);
+        choreIn.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(choreIn);
+        builder.setTitle("Add new chore");
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(choreIn.getText() != null) {
+                    final String newChore = choreIn.getText().toString();
+                    choresToAllocate.add(newChore);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+
 
         // Checks that chore hasn't already been added
         Boolean add = Boolean.TRUE;
@@ -65,8 +90,12 @@ public class AddChoresActivity extends AppCompatActivity {
             }
         }
         if (add == Boolean.TRUE) {
-            choresToAllocate.add(chore);
-            adapter.notifyDataSetChanged();   //This updates the recyclerView
+            if(spinner.getSelectedItemPosition() == 4) {
+                builder.show();
+            } else {
+                choresToAllocate.add(chore);
+                adapter.notifyDataSetChanged();   //This updates the recyclerView
+            }
         }
     }
 

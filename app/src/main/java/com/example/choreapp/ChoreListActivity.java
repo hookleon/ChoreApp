@@ -132,19 +132,33 @@ public class ChoreListActivity extends AppCompatActivity {
         // Randomly assigns chores to members
         Random rand = new Random();
         int r;
+        int maxChores = choresToAllocate.size() / members.size() + 1;
 
         // remove all previous chores before allocating chores
-        //mRef.child("groups").child(houseID).child("members").removeValue();
         for (int i = 0; i < members.size(); i++) {
             members.get(i).resetChores();
         }
 
-        // allocate chores
-        for (int i = 0; i < choresToAllocate.size(); i++) {
-            r = rand.nextInt(members.size());
-            members.get(r).addChore(choresToAllocate.get(i));
+        //Fair chore alloc
+        while(choresToAllocate.size() > 0) {
+            if(choresToAllocate.size() >= members.size()) {
+                for(int i = 0; i < members.size(); i++) {
+                    r = rand.nextInt(choresToAllocate.size());
+                    members.get(i).addChore(choresToAllocate.get(r));
+                    choresToAllocate.remove(r);
+                }
+            } else {
+                for(int i = 0; i < choresToAllocate.size(); i++) {
+                    r = rand.nextInt(members.size());
+                    if(members.get(r).getChores().size() < maxChores) {
+                        members.get(r).addChore(choresToAllocate.get(i));
+                        choresToAllocate.remove(i);
+                    }
+                }
+            }
         }
-        // if member has no chores, they get Nothing
+
+        // if member has no chores, they get Nothing (only used when chores < memsize)
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getChores().isEmpty()) {
                 members.get(i).addChore("Nothing");
