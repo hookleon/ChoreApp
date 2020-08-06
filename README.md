@@ -6,6 +6,12 @@
 # - Edit members in your household
 # - Supports usage on multiple phones with fast update
 
+For Beta
+We need:
+- Swap chores
+- Timer for each week
+- Change chores in settings
+
 [![codecov](https://codecov.io/gh/hookleon/ChoreRoulette/branch/master/graph/badge.svg)](https://codecov.io/gh/hookleon/ChoreRoulette)
 [![Documentation](https://codedocs.xyz/hookleon/ChoreApp.svg)](https://codedocs.xyz/hookleon/ChoreApp/)
 ![Android CI](https://github.com/hookleon/ChoreRoulette/workflows/Android%20CI/badge.svg?branch=master)
