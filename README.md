@@ -6,5 +6,5 @@
 # - Edit members in your household
 # - Supports usage on multiple phones with fast update
 
-
+[![Documentation](https://codedocs.xyz/hookleon/ChoreApp.svg)](https://codedocs.xyz/hookleon/ChoreApp/)
 ![Android CI](https://github.com/hookleon/ChoreRoulette/workflows/Android%20CI/badge.svg?branch=master)
