@@ -81,8 +81,6 @@ public class AddChoresActivity extends AppCompatActivity {
             }
         });
 
-
-
         // Checks that chore hasn't already been added
         Boolean add = Boolean.TRUE;
         for(int i = 0; i < choresToAllocate.size(); i++) {
