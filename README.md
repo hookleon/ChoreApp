@@ -5,3 +5,6 @@
 # - Login using a unique house ID
 # - Edit members in your household
 # - Supports usage on multiple phones with fast update
+
+
+![Android CI](https://github.com/hookleon/ChoreRoulette/workflows/Android%20CI/badge.svg?branch=master)
