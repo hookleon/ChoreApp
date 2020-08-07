@@ -19,7 +19,7 @@ public class MemberProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_profile);
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         //String membID = intent.getStringExtra(ChoreListActivity.MEMB_ID);
     }
 }
