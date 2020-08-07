@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-//testing Tiaan
-public class MainActivity extends AppCompatActivity {
+public class MemberProfileActivity extends AppCompatActivity {
 
     //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -19,21 +17,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_member_profile);
+
+        //Intent intent = getIntent();
+        //String membID = intent.getStringExtra(ChoreListActivity.MEMB_ID);
     }
-
-    // Click Create Household button
-    public void createHousehold (View view) {
-        Intent intent = new Intent(this, AddHouseMemberActivity.class);
-        startActivity(intent);
-    }
-
-    public void login (View view) {
-        Intent intent = new Intent(this,  LoginActivity.class);
-        startActivity(intent);
-    }
-
-
-
-
 }

@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import android.widget.Spinner;
@@ -80,8 +79,6 @@ public class AddChoresActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-
-
 
         // Checks that chore hasn't already been added
         Boolean add = Boolean.TRUE;
