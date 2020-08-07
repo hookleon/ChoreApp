@@ -16,7 +16,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    // Click Create Household button
+    /**
+     * Changes the activity to AddMemberActivity when CreateHousehold Button is Clicked
+     * @param view user interface components
+     */
     public void createHousehold (View view) {
         Intent intent = new Intent(this, AddHouseMemberActivity.class);
         startActivity(intent);
