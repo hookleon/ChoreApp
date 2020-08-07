@@ -34,7 +34,6 @@ public class AddChoresActivity extends AppCompatActivity {
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String houseID;
     private List<String> choresToAllocate = new ArrayList<>();
-    private RecyclerView recView;
     private AddChoreAdapter adapter;
 
     @Override
@@ -46,7 +45,7 @@ public class AddChoresActivity extends AppCompatActivity {
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
 
         // RecView stuff
-        recView = (RecyclerView) findViewById(R.id.recView2);
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView2);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
@@ -77,6 +76,7 @@ public class AddChoresActivity extends AppCompatActivity {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //Empty
             }
         });
 

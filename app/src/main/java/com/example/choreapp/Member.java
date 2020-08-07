@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 //test
 public class Member {
-    private String name, id, houseID;
+    private String name;
+    private String id;
+    private String houseID;
     private List<String> chores;
 
     public Member(String name, String id, String houseID) {

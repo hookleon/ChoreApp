@@ -45,7 +45,6 @@ public class ChoreListActivity extends AppCompatActivity {
     private List<String> membNames = new ArrayList<>();
     private List<String> choresToAllocate = new ArrayList<>();
 
-    private RecyclerView recView;
     private ListAdapter adapter;
 
     @Override
@@ -55,11 +54,11 @@ public class ChoreListActivity extends AppCompatActivity {
 
         //House ID can come from multiple different activities, new group or preexisting group
         Intent intent = getIntent();
-        if(intent.getAction() == "create") {
+        if(intent.getAction().equals("create")) {
             houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
-        } else if(intent.getAction() == "login") {
+        } else if(intent.getAction().equals("login")) {
             houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
-        } else if(intent.getAction() == "settings") {
+        } else if(intent.getAction().equals("settings")) {
             houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
         }
 
@@ -92,7 +91,7 @@ public class ChoreListActivity extends AppCompatActivity {
         });
 
         // RecView stuff
-        recView = (RecyclerView) findViewById(R.id.recView3);
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView3);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
@@ -113,7 +112,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        //Nothing happens
+                        //Empty
                     }
                 })
         );
@@ -126,7 +125,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //Empty
             }
         });
     }

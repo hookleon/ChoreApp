@@ -6,15 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-//testing Tiaan
+
 public class MainActivity extends AppCompatActivity {
-
-    //links the app to the database stored on firebase
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference mRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
