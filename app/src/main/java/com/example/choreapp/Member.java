@@ -1,13 +1,12 @@
 package com.example.choreapp;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
-    private String name, id, houseID;
+    private String name;
+    private String id;
+    private String houseID;
     private List<String> chores;
 
     public Member(String name, String id, String houseID) {

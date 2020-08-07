@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
+
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,13 @@ public class ChoreListActivity extends AppCompatActivity {
 
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     public String houseID;
+    public static final String MEMB_ID = "com.example.choreapp.MEMB_ID";
+
 
     private List<Member> members = new ArrayList<>();
+    private List<String> membNames = new ArrayList<>();
     private List<String> choresToAllocate = new ArrayList<>();
 
-    private RecyclerView recView;
     private ListAdapter adapter;
 
     @Override
@@ -52,25 +54,68 @@ public class ChoreListActivity extends AppCompatActivity {
 
         //House ID can come from multiple different activities, new group or preexisting group
         Intent intent = getIntent();
-        if(intent.getAction() == "create") {
+        if(intent.getAction().equals("create")) {
             houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
-        } else if(intent.getAction() == "login") {
+        } else if(intent.getAction().equals("login")) {
             houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
-        } else if(intent.getAction() == "settings") {
+        } else if(intent.getAction().equals("settings")) {
             houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
         }
 
-        TextView textHID = findViewById(R.id.textHID);
+        final TextView textHID = findViewById(R.id.textHID);
         textHID.setText("HID: " + houseID);
 
+        for(int i = 0; i < members.size(); i++) {
+            membNames.add(members.get(i).getName());
+        }
+
+        //Item click
+
+        final Intent swapIntent = new Intent(this, SwapChoresActivity.class);
+        final Intent profIntent = new Intent(this, MemberProfileActivity.class);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Swap chores");
+        builder.setItems(R.array.list_options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0) {
+                    //profile
+                    builder.setTitle("Profile");
+                    startActivity(profIntent);
+                } else if(which == 1) {
+                    //swap chores
+                    builder.setTitle("Chores");
+                    startActivity(swapIntent);
+                }
+            }
+        });
+
         // RecView stuff
-        recView = (RecyclerView) findViewById(R.id.recView3);
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView3);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ListAdapter(members);
         recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recView.setAdapter(adapter);
+        recView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Member get = members.get(position); //Want to get this member into the builder so that it can send it through the intent to either profile or chore swap activity
+                        String id = get.getID();
+                        //builder.setMessage(position);
+                        profIntent.putExtra(MEMB_ID, id);
+                        swapIntent.putExtra(MEMB_ID, id);
+                        builder.show();
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        //Empty
+                    }
+                })
+        );
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,7 +125,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //Empty
             }
         });
     }
@@ -113,8 +158,8 @@ public class ChoreListActivity extends AppCompatActivity {
             members.add(new Member(name,id,hid));
 
             nMemChores = dsMems.child(String.valueOf(i)).child("chores").getChildrenCount();
+            dsMemChores = dsMems.child(String.valueOf(i)).child("chores");
             for(int k = 0; k < nMemChores; k++){
-                dsMemChores = dsMems.child(String.valueOf(i)).child("chores");
                 members.get(i).addChore(dsMemChores.child(String.valueOf(k)).getValue(String.class));
             }
         }
@@ -158,11 +203,14 @@ public class ChoreListActivity extends AppCompatActivity {
             }
         }
 
+        String cur;
         // if member has no chores, they get Nothing (only used when chores < memsize)
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getChores().isEmpty()) {
                 members.get(i).addChore("Nothing");
             }
+            cur = members.get(i).getID();
+            mRef.child("users").child(cur).setValue(members.get(i));
         }
         mRef.child("groups").child(houseID).child("members").setValue(members);
 

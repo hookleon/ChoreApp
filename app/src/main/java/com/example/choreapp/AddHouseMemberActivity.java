@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,7 +33,6 @@ public class AddHouseMemberActivity extends AppCompatActivity{
     private String houseID = UUID.randomUUID().toString();
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  //Passes houseid to next activity so chores can be added to activity
 
-    private RecyclerView recView;
     private MyAdapter adapter;
 
     @Override
@@ -42,10 +40,10 @@ public class AddHouseMemberActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_house_member);
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
         // RecView stuff
-        recView = (RecyclerView) findViewById(R.id.recView);
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
