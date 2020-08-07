@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -38,10 +37,10 @@ public class EditHouseMemberActivity extends AppCompatActivity{
     private String houseID;
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  //Passes houseid to next activity so chores can be added to activity
 
-    private RecyclerView recView;
     private MyAdapter adapter;
-    TextView textView;
-    EditText editHouse;
+    //private TextView textView;
+    private EditText editHouse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +50,7 @@ public class EditHouseMemberActivity extends AppCompatActivity{
         houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
         editHouse = findViewById(R.id.editHouse);
         // RecView stuff
-        recView = (RecyclerView) findViewById(R.id.recView);
+        RecyclerView recView = (RecyclerView) findViewById(R.id.recView);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
@@ -67,7 +66,7 @@ public class EditHouseMemberActivity extends AppCompatActivity{
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //Empty
             }
         });
     }

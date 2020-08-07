@@ -2,17 +2,16 @@ package com.example.choreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
 
 public class MemberProfileActivity extends AppCompatActivity {
 
     //links the app to the database stored on firebase
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference mRef = database.getReference();
+    //private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //private DatabaseReference mRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,15 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-//testing Tiaan
+
 public class MainActivity extends AppCompatActivity {
-
-    //links the app to the database stored on firebase
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference mRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +16,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    // Click Create Household button
+    /**
+     * Changes the activity to AddMemberActivity when CreateHousehold Button is Clicked
+     * @param view user interface components
+     */
     public void createHousehold (View view) {
         Intent intent = new Intent(this, AddHouseMemberActivity.class);
         startActivity(intent);
