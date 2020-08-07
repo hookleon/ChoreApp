@@ -20,6 +20,6 @@ public class MemberProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_member_profile);
 
         Intent intent = getIntent();
-        String membID = intent.getStringExtra(ChoreListActivity.MEMB_ID);
+        //String membID = intent.getStringExtra(ChoreListActivity.MEMB_ID);
     }
 }
