@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,8 +12,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +40,12 @@ public class SwapChoresActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //Empty
             }
         });
     }
 
-    void swapChores(DataSnapshot ds) {
+    public void swapChores(DataSnapshot ds) {
         //Organises data tom grab from database as the member initiating the chore swap
         DataSnapshot dsMemIn = ds.child("users").child(membID);
         String name = dsMemIn.child("name").getValue(String.class);
