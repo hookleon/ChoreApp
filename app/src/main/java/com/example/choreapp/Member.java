@@ -2,7 +2,7 @@ package com.example.choreapp;
 
 import java.util.ArrayList;
 import java.util.List;
-//test
+
 public class Member {
     private String name;
     private String id;
