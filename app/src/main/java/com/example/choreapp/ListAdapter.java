@@ -1,3 +1,9 @@
+/*
+  ListAdapter.java
+  ----------------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import android.view.LayoutInflater;
@@ -9,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-// This adapter allows the app to display names of users when adding names to the household
+/**
+ * The adapter allows the app to display names of users when adding names to the household
+ */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     private List<Member> mDataset;
 
@@ -28,12 +36,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Creates instance object that depends on the kind of dataset
+     * @param myDataset
+     */
     public ListAdapter(List<Member> myDataset) {
         mDataset = myDataset;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Creates new views (invoked by the layout manager)
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
@@ -41,7 +57,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         return new MyViewHolder(v);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * Replaces the contents of a view (invoked by the layout manager)
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -61,7 +81,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.chores.setText(choresText);
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Returns the size of your dataset (invoked by the layout manager)
+     * @return size of the mDataset
+     */
     @Override
     public int getItemCount() {
         return mDataset.size();

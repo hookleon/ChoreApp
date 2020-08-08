@@ -1,3 +1,9 @@
+/*
+  EditHouseMemberActivity.java
+  ----------------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.annotation.NonNull;
@@ -24,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ */
 public class EditHouseMemberActivity extends AppCompatActivity{
 
     // Will display names of house members
@@ -41,6 +50,10 @@ public class EditHouseMemberActivity extends AppCompatActivity{
     //private TextView textView;
     private EditText editHouse;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +84,11 @@ public class EditHouseMemberActivity extends AppCompatActivity{
         });
     }
 
+    /**
+     * Used to clear both members and chores to allocate so they can be updated from the database
+     *
+     * @param dataSnapshot
+     */
     private void showData(DataSnapshot dataSnapshot) {
         //clears both members and chores to allocate so they can be updated from the database
         members.clear();
@@ -102,7 +120,10 @@ public class EditHouseMemberActivity extends AppCompatActivity{
         //textView.setText(houseID);
     }
 
-    // Adds name from the textbox
+    /**
+     * Adds member of household with name taken from the textbox
+     * @param view
+     */
     public void addMember (View view) {
         // When clicked, the text will be taken and added as a name of a person in household
         // the newMember will take name from editMember and send it to Firebase
@@ -115,6 +136,10 @@ public class EditHouseMemberActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();   //This updates the recyclerView
     }
 
+    /**
+     *
+     * @param view
+     */
     public void confirmMembers (View view) {
         //Adds all members under the name of new household
         //EditText editHouse = (EditText) findViewById(R.id.editHouse);

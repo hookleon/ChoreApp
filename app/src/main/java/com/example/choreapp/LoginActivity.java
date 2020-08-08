@@ -1,3 +1,9 @@
+/*
+  LoginActivity.java
+  ------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.annotation.NonNull;
@@ -16,6 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ *
+ */
 public class LoginActivity extends AppCompatActivity {
 
     //links the app to the database stored on firebase
@@ -25,12 +34,20 @@ public class LoginActivity extends AppCompatActivity {
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  //Passes houseid to next activity so chores can be added to activity
     public String hid;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void loginClick(final View view){
         EditText editHID = (EditText) findViewById(R.id.editHID);
         hid = editHID.getText().toString();
@@ -56,6 +73,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     */
     public void proceedLogin(){
         Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID, hid);
