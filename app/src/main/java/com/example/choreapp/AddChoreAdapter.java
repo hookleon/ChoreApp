@@ -1,3 +1,8 @@
+/*
+  AddChoreAdapter.java
+  --------------------
+  Chore Roulette App
+ */
 package com.example.choreapp;
 
 import android.view.LayoutInflater;
@@ -10,13 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-// This adapter allows the app to display names of users when adding names to the household
+/**
+ * An adapter to display the names of users when adding names to the household
+ */
 public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyViewHolder> {
     private List<String> mDataset;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+    /**
+     * Provides a reference to the views for each data item
+     * Complex data items may need more than one view per item, and
+     * you provide access to all the views for a data item in a view holder
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView chore;
@@ -29,12 +38,20 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Provide a suitable constructor (depends on the kind of dataset)
+     * @param myDataset
+     * */
     public AddChoreAdapter(List<String> myDataset) {
         mDataset = myDataset;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Construct a new view (invoked by the layout manager)
+     * @param parent ViewGroup object
+     * @param viewType
+     * @return a new MyViewHolder object
+     * */
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
@@ -42,7 +59,11 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
         return new MyViewHolder(v);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * Replace the contents of a view (invoked by the layout manager)
+     * @param holder MyViewHolder object
+     * @param position index for mDataset
+     */
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         // - get element from your dataset at this position
@@ -61,7 +82,10 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
         });
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Returns the size of your dataset (invoked by the layout manager)
+     * @return The size of the dataset
+     */
     @Override
     public int getItemCount() {
         return mDataset.size();
