@@ -15,6 +15,6 @@ Chore Roulette is an app that allows households to manage and assign chores to i
  * Change chores in settings
 
 [![codecov](https://codecov.io/gh/hookleon/ChoreRoulette/branch/master/graph/badge.svg)](https://codecov.io/gh/hookleon/ChoreRoulette)
-[![Documentation](https://codedocs.xyz/hookleon/ChoreApp.svg)](https://codedocs.xyz/hookleon/ChoreApp/)
+[![Documentation](https://codedocs.xyz/hookleon/ChoreRoulette.svg)](https://codedocs.xyz/hookleon/ChoreRoulette/)
 ![Android CI](https://github.com/hookleon/ChoreRoulette/workflows/Android%20CI/badge.svg?branch=Leon&event=push)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/20842fab889d4bd48d0d7c0cf8dba96e)](https://www.codacy.com/manual/hookleon/ChoreRoulette?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hookleon/ChoreRoulette&amp;utm_campaign=Badge_Grade)
