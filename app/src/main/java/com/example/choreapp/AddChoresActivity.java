@@ -1,3 +1,9 @@
+/*
+  AddChoresActivity.java
+  ----------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,17 +31,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides a link from the app to the Firebase database
+ */
 public class AddChoresActivity extends AppCompatActivity {
-
-    //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
-
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String houseID;
     private List<String> choresToAllocate = new ArrayList<>();
     private AddChoreAdapter adapter;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +64,10 @@ public class AddChoresActivity extends AppCompatActivity {
         recView.setAdapter(adapter);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void addChore (View view){
         //Need code that will add selected chore to the list of chores house will use
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -97,6 +111,10 @@ public class AddChoresActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @param view
+     */
     public void confirmChores (View view) {
         if (choresToAllocate.size() < 1) {
             Context context = getApplicationContext();

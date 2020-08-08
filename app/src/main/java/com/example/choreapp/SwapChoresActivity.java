@@ -1,3 +1,9 @@
+/*
+  SwapChoresActivity.java
+  -----------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.annotation.NonNull;
@@ -16,6 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class SwapChoresActivity extends AppCompatActivity {
 
     //links the app to the database stored on firebase
@@ -23,6 +32,10 @@ public class SwapChoresActivity extends AppCompatActivity {
     private DatabaseReference mRef = database.getReference();
     public String membID;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +58,10 @@ public class SwapChoresActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param ds
+     */
     public void swapChores(DataSnapshot ds) {
         //Organises data tom grab from database as the member initiating the chore swap
         DataSnapshot dsMemIn = ds.child("users").child(membID);
