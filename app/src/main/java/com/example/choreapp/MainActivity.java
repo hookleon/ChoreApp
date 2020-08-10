@@ -2,7 +2,19 @@
   MainActivity.java
   -----------------
   Chore Roulette App
-  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt  
+ */
+/*! \mainpage My Personal Index Page
+ *
+ * \section intro_sec Introduction
+ *
+ * This is the introduction.
+ *
+ * \section install_sec Installation
+ *
+ * \subsection step1 Step 1: Opening the box
+ *
+ * etc...
  */
 package com.example.choreapp;
 
@@ -14,7 +26,7 @@ import android.view.View;
 
 
 /**
- *
+ * This is the main program.
  */
 public class MainActivity extends AppCompatActivity {
 
