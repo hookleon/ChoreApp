@@ -44,6 +44,10 @@ public class Member {
         this.chores.add(chore);
     }
 
+    public void setChores(List<String> chores){
+        this.chores = chores;
+    }
+
     public void resetChores() { this.chores.clear(); }
 
 }

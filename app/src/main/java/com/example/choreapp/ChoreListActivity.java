@@ -39,7 +39,7 @@ public class ChoreListActivity extends AppCompatActivity {
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     public String houseID;
     public static final String MEMB_ID = "com.example.choreapp.MEMB_ID";
-
+    public static final String MEMB_POS = "com.example.choreapp.MEMB_POS";
 
     private List<Member> members = new ArrayList<>();
     private List<String> membNames = new ArrayList<>();
@@ -60,6 +60,8 @@ public class ChoreListActivity extends AppCompatActivity {
             houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
         } else if(intent.getAction().equals("settings")) {
             houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
+        } else if(intent.getAction().equals("swap")) {
+            houseID = intent.getStringExtra(SwapChoresActivity.HOUSE_ID);
         }
 
         final TextView textHID = findViewById(R.id.textHID);
@@ -106,7 +108,11 @@ public class ChoreListActivity extends AppCompatActivity {
                         String id = get.getID();
                         //builder.setMessage(position);
                         profIntent.putExtra(MEMB_ID, id);
+
                         swapIntent.putExtra(MEMB_ID, id);
+                        swapIntent.putExtra(HOUSE_ID, houseID);
+                        swapIntent.putExtra(MEMB_POS, String.valueOf(position));
+
                         builder.show();
                     }
 
