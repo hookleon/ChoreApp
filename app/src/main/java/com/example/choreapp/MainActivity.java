@@ -4,7 +4,7 @@
   Chore Roulette App
   Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt  
  */
-/*! \mainpage My Personal Index Page
+/** \mainpage My Personal Index Page
  *
  * \section intro_sec Introduction
  *
