@@ -9,6 +9,7 @@ package com.example.choreapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -161,7 +163,11 @@ public class SwapChoresActivity extends AppCompatActivity {
         */
 
         if(membOut.getID().equals(membIn.getID())) {
-            test.setText("FUCK");   //Put toast here
+            Context context = getApplicationContext();
+            CharSequence text = "Don't swap chores with yourself...";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         } else {
             List<String> choreOut = membOut.getChores();
             String swapOut = spinMembIn.getSelectedItem().toString();
