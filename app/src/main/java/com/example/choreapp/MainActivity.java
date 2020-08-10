@@ -2,7 +2,7 @@
   MainActivity.java
   -----------------
   Chore Roulette App
-  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt  
  */
 /*! \mainpage My Personal Index Page
  *
