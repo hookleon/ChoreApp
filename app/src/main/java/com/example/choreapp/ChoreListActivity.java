@@ -1,3 +1,9 @@
+/*
+  ChoreListActivity.java
+  ----------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.annotation.NonNull;
@@ -30,6 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Links the app with the Firebase database.
+ */
 public class ChoreListActivity extends AppCompatActivity {
 
     //links the app to the database stored on firebase
@@ -47,6 +56,10 @@ public class ChoreListActivity extends AppCompatActivity {
 
     private ListAdapter adapter;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +85,6 @@ public class ChoreListActivity extends AppCompatActivity {
         }
 
         //Item click
-
         final Intent swapIntent = new Intent(this, SwapChoresActivity.class);
         final Intent profIntent = new Intent(this, MemberProfileActivity.class);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -136,6 +148,10 @@ public class ChoreListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Clears both members and chores to allocate so they can be updated from the database.
+     * @param dataSnapshot
+     */
     private void showData(DataSnapshot dataSnapshot) {
         //clears both members and chores to allocate so they can be updated from the database
         members.clear();
@@ -179,6 +195,10 @@ public class ChoreListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * The random allocation of chores to household members
+     * @param view
+     */
     public void assignChores(View view) {
         // Randomly assigns chores to members
         Random rand = new Random();
@@ -223,12 +243,20 @@ public class ChoreListActivity extends AppCompatActivity {
     }
     // Need code to add each member of household as a viewable text with their chore for the week next to them
 
+    /**
+     *
+     * @param view
+     */
     public void settings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.putExtra(HOUSE_ID, houseID);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void copyHID(View view) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("HID", houseID);
@@ -241,4 +269,3 @@ public class ChoreListActivity extends AppCompatActivity {
         toast.show();
     }
 }
-

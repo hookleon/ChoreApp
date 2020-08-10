@@ -1,3 +1,9 @@
+/*
+  SettingsActivity.java
+  ---------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,10 +12,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ *
+ */
 public class SettingsActivity extends AppCompatActivity {
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String houseID;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +37,10 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }*/
 
+    /**
+     *
+     * @param view
+     */
     public void editMembers(View view) {
         Intent intent = new Intent(this, EditHouseMemberActivity.class);
         intent.putExtra(HOUSE_ID, houseID);
@@ -31,6 +48,10 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void back(View view){
         Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID, houseID);

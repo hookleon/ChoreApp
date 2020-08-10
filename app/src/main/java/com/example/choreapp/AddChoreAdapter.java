@@ -2,6 +2,7 @@
   AddChoreAdapter.java
   --------------------
   Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
  */
 package com.example.choreapp;
 

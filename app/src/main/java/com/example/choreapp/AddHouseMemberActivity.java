@@ -1,3 +1,9 @@
+/*
+  AddHouseMemberActivity.java
+  ---------------------------
+  Chore Roulette App
+  Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
+ */
 package com.example.choreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ */
 public class AddHouseMemberActivity extends AppCompatActivity{
 
     // Will display names of house members
@@ -35,6 +44,10 @@ public class AddHouseMemberActivity extends AppCompatActivity{
 
     private MyAdapter adapter;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +66,11 @@ public class AddHouseMemberActivity extends AppCompatActivity{
     }
 
     // Adds name from the textbox
+
+    /**
+     * Sets the name of a household member
+     * @param view
+     */
     public void addMember (View view) {
         // When clicked, the text will be taken and added as a name of a person in household
         // the newMember will take name from editMember and send it to Firebase
@@ -65,6 +83,10 @@ public class AddHouseMemberActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();   //This updates the recyclerView
     }
 
+    /**
+     * Adds all members under the name of new household
+     * @param view
+     */
     public void confirmMembers (View view) {
         //Adds all members under the name of new household
         EditText editHouse = (EditText) findViewById(R.id.editHouse);
