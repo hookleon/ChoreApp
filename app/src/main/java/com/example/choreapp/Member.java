@@ -92,9 +92,6 @@ public class Member {
         this.chores = chores;
     }
 
-    public void resetChores() { this.chores.clear(); }
-
-
     /**
      * To clear chores List
      */
