@@ -87,10 +87,19 @@ public class Member {
         this.chores.add(chore);
     }
 
+
+    public void setChores(List<String> chores){
+        this.chores = chores;
+    }
+
+    public void resetChores() { this.chores.clear(); }
+
+
     /**
      * To clear chores List
      */
     public void resetChores() {
         this.chores.clear();
     }
+
 }
