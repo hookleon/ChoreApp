@@ -165,7 +165,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
         TextView textHouseName = (TextView) findViewById(R.id.textHouseName);
         String houseName = dataSnapshot.child("groups").child(houseID).child("name").getValue(String.class);
-        textHouseName.setText(houseName);
+        getSupportActionBar().setTitle(houseName);
 
         DataSnapshot dsMems = dataSnapshot.child("groups").child(houseID).child("members");
         DataSnapshot dsChores = dataSnapshot.child("groups").child(houseID).child("chores");
@@ -280,5 +280,11 @@ public class ChoreListActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = exitHouseID.edit();
         editor.putString("houseID", hid);
         editor.commit();
+    }
+
+    public static String readString(Context context) {
+        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
+        String houseID = exitHouseID.getString("houseID", "exit");
+        return houseID;
     }
 }
