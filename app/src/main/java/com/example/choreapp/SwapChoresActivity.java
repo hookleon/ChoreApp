@@ -41,7 +41,6 @@ public class SwapChoresActivity extends AppCompatActivity {
     private String houseID;
     private int membPos;
 
-
     private Spinner spinMembIn;
 
     private Spinner spinMembTo;
@@ -56,7 +55,7 @@ public class SwapChoresActivity extends AppCompatActivity {
 
     /**
      *
-     * @param savedInstanceState
+     *  @param savedInstanceState
      */
 
     @Override

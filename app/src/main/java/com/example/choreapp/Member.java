@@ -19,7 +19,6 @@ public class Member {
     private List<String> chores;
 
     /**
-     *
      * @param name
      * @param id
      * @param houseID
@@ -32,7 +31,6 @@ public class Member {
     }
 
     /**
-     *
      * @return name
      */
     public String getName() {
@@ -40,7 +38,6 @@ public class Member {
     }
 
     /**
-     *
      * @param name
      */
     public void setName(String name) {
@@ -48,7 +45,6 @@ public class Member {
     }
 
     /**
-     *
      * @return id
      */
     public String getID() {
@@ -56,7 +52,6 @@ public class Member {
     }
 
     /**
-     *
      * @return houseID
      */
     public String getHouseID() {
@@ -64,7 +59,6 @@ public class Member {
     }
 
     /**
-     *
      * @param houseID
      */
     public void setHouseID(String houseID) {
@@ -72,7 +66,6 @@ public class Member {
     }
 
     /**
-     *
      * @return
      */
     public List<String> getChores() {
@@ -80,7 +73,6 @@ public class Member {
     }
 
     /**
-     *
      * @param chore
      */
     public void addChore(String chore) {
@@ -88,7 +80,7 @@ public class Member {
     }
 
 
-    public void setChores(List<String> chores){
+    public void setChores(List<String> chores) {
         this.chores = chores;
     }
 

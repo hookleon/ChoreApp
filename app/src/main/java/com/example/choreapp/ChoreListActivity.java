@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.view.View;
@@ -50,6 +51,8 @@ public class ChoreListActivity extends AppCompatActivity {
     public static final String MEMB_ID = "com.example.choreapp.MEMB_ID";
     public static final String MEMB_POS = "com.example.choreapp.MEMB_POS";
 
+    public static final String PREF_HOUSE_ID = "PrefHouseID";
+
     private List<Member> members = new ArrayList<>();
     private List<String> membNames = new ArrayList<>();
     private List<String> choresToAllocate = new ArrayList<>();
@@ -69,6 +72,8 @@ public class ChoreListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.getAction().equals("create")) {
             houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
+        } else if(intent.getAction().equals("savedLogin")) {
+            houseID = intent.getStringExtra(MainActivity.HOUSE_ID);
         } else if(intent.getAction().equals("login")) {
             houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
         } else if(intent.getAction().equals("settings")) {
@@ -79,6 +84,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
         final TextView textHID = findViewById(R.id.textHID);
         textHID.setText("HID: " + houseID);
+        writeString(this, houseID);
 
         for(int i = 0; i < members.size(); i++) {
             membNames.add(members.get(i).getName());
@@ -267,5 +273,12 @@ public class ChoreListActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    public static void writeString(Context context, String hid) {
+        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
+        SharedPreferences.Editor editor = exitHouseID.edit();
+        editor.putString("houseID", hid);
+        editor.commit();
     }
 }
