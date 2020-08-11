@@ -1,11 +1,12 @@
 /*
-  AddChoresActivity.java
-  ----------------------
+  SwapChoresActivity.java
+  -----------------------
   Chore Roulette App
   Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt
  */
 package com.example.choreapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,22 +20,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides a link from the app to the Firebase database
+ *
  */
-public class AddChoresActivity extends AppCompatActivity {
+public class EditChoreListActivity extends AppCompatActivity {
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
@@ -44,6 +50,17 @@ public class AddChoresActivity extends AppCompatActivity {
 
     private AddChoreAdapter adapter;
 
+    private List<String> choreList = new ArrayList<>();
+
+    //private TextView textView;
+    private EditText editHouse;
+
+    private Member membIn;
+    private Member membOut;
+    private List<String> choreIn;
+    private String membID;
+
+
     /**
      *
      * @param savedInstanceState
@@ -51,10 +68,13 @@ public class AddChoresActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_chores);
+        setContentView(R.layout.activity_edit_chore_list);
 
         Intent intent = getIntent();
-        houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
+        houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
+        editHouse = findViewById(R.id.editHouse);
+
+
 
         // RecView stuff
         RecyclerView recView = (RecyclerView) findViewById(R.id.recView2);
@@ -64,12 +84,44 @@ public class AddChoresActivity extends AppCompatActivity {
         adapter = new AddChoreAdapter(choresToAllocate);
         recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recView.setAdapter(adapter);
+
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Empty
+            }
+        });
     }
 
-    /**
-     *
-     * @param view
-     */
+    private void showData(DataSnapshot dataSnapshot) {
+        choresToAllocate.clear();
+        String chores = "";
+        DataSnapshot dsChores = dataSnapshot.child("groups").child(houseID).child("chores");
+        DataSnapshot dsMemChores;
+        long nChores = dsChores.getChildrenCount();
+        long nMemChores;
+
+        String name = "";
+        String id = "";
+        String hid = "";
+        //Gets chores to allocate from database
+        for(int i = 0; i < nChores; i++){
+            chores = dsChores.child(String.valueOf(i)).getValue(String.class);
+            choresToAllocate.add(chores);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+        /**
+         *
+         * @param view
+         */
     public void addChore (View view){
         //Need code that will add selected chore to the list of chores house will use
         Spinner spinner = (Spinner) findViewById(R.id.spinner);

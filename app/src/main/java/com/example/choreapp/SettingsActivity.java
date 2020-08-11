@@ -32,10 +32,12 @@ public class SettingsActivity extends AppCompatActivity {
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
     }
 
-    /*public void editChores(View view) {
-        Intent intent = new Intent(this, AddChoresActivity.class);
+    public void editChores(View view) {
+        Intent intent = new Intent(this, EditChoreListActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
+        intent.setAction("edit");
         startActivity(intent);
-    }*/
+    }
 
     /**
      *

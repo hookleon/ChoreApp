@@ -36,7 +36,7 @@ import java.util.UUID;
 public class EditHouseMemberActivity extends AppCompatActivity{
 
     // Will display names of house members
-    private List<Member> members = new ArrayList<>();;
+    private List<Member> members = new ArrayList<>();
 
     //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
