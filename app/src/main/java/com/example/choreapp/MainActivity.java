@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         TextView test = findViewById(R.id.test);
         test.setText(houseID);
 
-        attemptLogin(houseID);
+        //attemptLogin(houseID);
     }
 
     /**
