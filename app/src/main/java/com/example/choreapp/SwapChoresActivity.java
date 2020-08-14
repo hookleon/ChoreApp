@@ -9,7 +9,9 @@ package com.example.choreapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -161,6 +163,21 @@ public class SwapChoresActivity extends AppCompatActivity {
             membOutPos is the position of membOut in the members array
         */
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Swap chores")
+                .setPositiveButton("Confirm Changes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertConfirm();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Empty
+                    }
+                });
+
         if(membOut.getID().equals(membIn.getID())) {
             Context context = getApplicationContext();
             CharSequence text = "Don't swap chores with yourself...";
@@ -171,7 +188,7 @@ public class SwapChoresActivity extends AppCompatActivity {
             List<String> choreOut = membOut.getChores();
             String swapOut = spinMembIn.getSelectedItem().toString();
             int swapOutPos = spinMembIn.getSelectedItemPosition();
-            int membOutPos = spinMembTo.getSelectedItemPosition();
+
             String swapIn = spinMembOut.getSelectedItem().toString();
             int swapInPos = spinMembOut.getSelectedItemPosition();
 
@@ -182,16 +199,21 @@ public class SwapChoresActivity extends AppCompatActivity {
 
             membIn.setChores(choreIn);
             membOut.setChores(choreOut);
-
-            mRef.child("users").child(membIn.getID()).setValue(membIn);
-            mRef.child("users").child(membOut.getID()).setValue(membOut);
-            mRef.child("groups").child(houseID).child("members").child(String.valueOf(membOutPos)).setValue(membOut);
-            mRef.child("groups").child(houseID).child("members").child(String.valueOf(membPos)).setValue(membIn);
-
-            Intent intent = new Intent(this, ChoreListActivity.class);
-            intent.putExtra(HOUSE_ID, houseID);
-            intent.setAction("swap");
-            startActivity(intent);
+            builder.setMessage(membIn.getName() + " will swap " + swapOut + " with " + membOut.getName() + " for " + swapIn);
+            builder.show();
         }
+    }
+
+    void alertConfirm() {
+        int membOutPos = spinMembTo.getSelectedItemPosition();
+        mRef.child("users").child(membIn.getID()).setValue(membIn);
+        mRef.child("users").child(membOut.getID()).setValue(membOut);
+        mRef.child("groups").child(houseID).child("members").child(String.valueOf(membOutPos)).setValue(membOut);
+        mRef.child("groups").child(houseID).child("members").child(String.valueOf(membPos)).setValue(membIn);
+
+        Intent intent = new Intent(this, ChoreListActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
+        intent.setAction("swap");
+        startActivity(intent);
     }
 }

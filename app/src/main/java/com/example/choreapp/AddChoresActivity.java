@@ -16,6 +16,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -39,6 +40,8 @@ public class AddChoresActivity extends AppCompatActivity {
     private DatabaseReference mRef = database.getReference();
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String houseID;
+
+    public static final String PREF_HOUSE_ID = "PrefHouseID";
 
     private List<String> choresToAllocate = new ArrayList<>();
 
@@ -126,11 +129,19 @@ public class AddChoresActivity extends AppCompatActivity {
             toast.show();
         } else {
             mRef.child("groups").child(houseID).child("chores").setValue(choresToAllocate);
+            writeString(this, houseID);
             Intent intent = new Intent(this, ChoreListActivity.class);
             intent.putExtra(HOUSE_ID, houseID);
             intent.setAction("create");
             startActivity(intent);
         }
 
+    }
+
+    public static void writeString(Context context, String hid) {
+        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
+        SharedPreferences.Editor editor = exitHouseID.edit();
+        editor.putString("houseID", hid);
+        editor.commit();
     }
 }

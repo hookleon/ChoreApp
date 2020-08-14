@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
+
+    public static final String PREF_HOUSE_ID = "PrefHouseID";
 
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  //Passes houseid to next activity so chores can be added to activity
     public String hid;
@@ -77,9 +80,17 @@ public class LoginActivity extends AppCompatActivity {
      *
      */
     public void proceedLogin(){
+        writeString(this, hid);
         Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID, hid);
         intent.setAction("login");
         startActivity(intent);
+    }
+
+    public static void writeString(Context context, String hid) {
+        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
+        SharedPreferences.Editor editor = exitHouseID.edit();
+        editor.putString("houseID", hid);
+        editor.commit();
     }
 }

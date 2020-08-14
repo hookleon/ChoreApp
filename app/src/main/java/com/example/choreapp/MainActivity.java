@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         TextView test = findViewById(R.id.test);
         test.setText(houseID);
 
-        //attemptLogin(houseID);
+        attemptLogin(houseID);
     }
 
     /**
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     Context context = getApplicationContext();
-                    CharSequence text = hid + " doesn't exist";
+                    CharSequence text = hid;
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
