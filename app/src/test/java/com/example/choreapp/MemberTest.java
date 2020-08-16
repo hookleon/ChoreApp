@@ -38,6 +38,6 @@ public class MemberTest {
     @Test
     public void testAddChore() {
         m.addChore("Rubbish");
-        assertEquals("Rubbish", m.getChores().get(1));
+        assertEquals("Rubbish", m.getChores().get(0));
     }
 }
