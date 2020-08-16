@@ -12,10 +12,11 @@
         android:id="@+id/edit_members_button"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="80dp"
         android:onClick="editMembers"
         android:text="Edit Members"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,22 +24,13 @@
         android:id="@+id/edit_chores_button"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="52dp"
         android:onClick="editChores"
         android:text="Edit Chores "
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_members_button" />
-
-    <Button
-        android:id="@+id/button_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="back"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button10"
@@ -49,6 +41,38 @@
         android:text="Logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editDeadline" />
+
+    <TextView
+        android:id="@+id/textHID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_hid"
+        app:layout_constraintBottom_toTopOf="@+id/button9"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/button_copy_hid"
+        android:onClick="copyHID"
+        android:text="@string/button_copy_hid"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/editDeadline"
+        android:layout_width="195dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="52dp"
+        android:onClick="editDeadline"
+        android:text="Edit Deadline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_chores_button" />
 

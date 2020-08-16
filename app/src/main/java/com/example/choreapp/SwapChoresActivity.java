@@ -34,22 +34,18 @@ import java.util.List;
  * SwapChoresActivity runs when you click swap chores in the popup menu in ChoreListActivity
  */
 public class SwapChoresActivity extends AppCompatActivity {
-
-    //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String membID;
     private String houseID;
     private int membPos;
-
     private TextView txtMembInChores;
     private TextView txtMembOut;
     private TextView txtMembOutChores;
     private Spinner spinMembIn;
     private Spinner spinMembTo;
     private Spinner spinMembOut;
-
     private Member membIn;
     private Member membOut;
     private List<String> choreIn;

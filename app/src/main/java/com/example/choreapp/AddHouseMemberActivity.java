@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * AddHouseMemberActivity runs when setting up household
+ * AddHouseMemberActivity runs when setting up household.
+ * Allows users to add people to their 'household'.
  */
 public class AddHouseMemberActivity extends AppCompatActivity{
 
@@ -65,11 +66,9 @@ public class AddHouseMemberActivity extends AppCompatActivity{
         recView.setAdapter(adapter);
     }
 
-    // Adds name from the textbox
-
     /**
      * Sets the name of a household member
-     * @param view
+     * @param view used for the event handling of the add member button.
      */
     public void addMember (View view) {
         // When clicked, the text will be taken and added as a name of a person in household
@@ -85,7 +84,7 @@ public class AddHouseMemberActivity extends AppCompatActivity{
 
     /**
      * Adds all members under the name of new household
-     * @param view
+     * @param view used for the event handling of the confirm button.
      */
     public void confirmMembers (View view) {
         //Adds all members under the name of new household

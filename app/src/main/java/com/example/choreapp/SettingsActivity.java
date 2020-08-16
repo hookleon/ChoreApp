@@ -10,11 +10,15 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * SettingsActivity shows a menu of settings users can adjust
@@ -36,6 +40,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
+        final TextView textHID = findViewById(R.id.textHID);
+        textHID.setText("HID: " + houseID);
     }
 
     /**
@@ -61,12 +67,16 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * Sends you back to ChoreListActivity
+     * Changes to EditDeadlineActivity
      * @param view
      */
-    public void back(View view){
-        backNav();
+    public void editDeadline(View view){
+        Intent intent = new Intent(this, EditDeadlineActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
+        intent.setAction("edit");
+        startActivity(intent);
     }
+
 
     /**
      * Sends you back to ChoreListActivity
@@ -97,5 +107,21 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = exitHouseID.edit();
         editor.putString("houseID", "logged out");
         editor.commit();
+    }
+
+    /**
+     * Copies the current houseID and stores inside the clipboard for easy pasting. Good for putting into messenger
+     * @param view
+     */
+    public void copyHID(View view) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("HID", houseID);
+        clipboard.setPrimaryClip(clip);
+
+        Context context = getApplicationContext();
+        CharSequence text = houseID + " copied";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

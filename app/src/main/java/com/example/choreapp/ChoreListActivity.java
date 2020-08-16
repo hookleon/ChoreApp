@@ -12,30 +12,26 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
 
 /**
  * ChoreListActivity is the main screen logged in users will see
@@ -46,17 +42,20 @@ public class ChoreListActivity extends AppCompatActivity {
     //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
-
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     public String houseID;
     public static final String MEMB_ID = "com.example.choreapp.MEMB_ID";
     public static final String MEMB_POS = "com.example.choreapp.MEMB_POS";
     public static final String PREF_HOUSE_ID = "PrefHouseID";
-
     private List<Member> members = new ArrayList<>();
     private List<String> membNames = new ArrayList<>();
     private List<String> choresToAllocate = new ArrayList<>();
     private ListAdapter adapter;
+    private Handler handler = new Handler();
+    private Runnable runnable;
+    private String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    private String deadline;
+
 
     /**
      * Runs when ChoreListActivity first opens
@@ -66,16 +65,10 @@ public class ChoreListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_list);
-
         houseID = readString(this);
-        final TextView textHID = findViewById(R.id.textHID);
-        textHID.setText("HID: " + houseID);
-        //writeString(this, houseID);
-
         for(int i = 0; i < members.size(); i++) {
             membNames.add(members.get(i).getName());
         }
-
         //Item click
         final Intent swapIntent = new Intent(this, SwapChoresActivity.class);
         final Intent profIntent = new Intent(this, MemberProfileActivity.class);
@@ -95,7 +88,6 @@ public class ChoreListActivity extends AppCompatActivity {
                 }
             }
         });
-
         // RecView stuff
         RecyclerView recView = (RecyclerView) findViewById(R.id.recView3);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
@@ -120,7 +112,6 @@ public class ChoreListActivity extends AppCompatActivity {
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        //Empty
                     }
                 })
         );
@@ -133,19 +124,31 @@ public class ChoreListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Empty
             }
         });
-    }
+        }
 
     /**
-     * Displays house members and their chores in a recyclerview
-     * @param dataSnapshot
+     * Gathers the house ID, the house members, the chores and the deadline from the database.
+     * The house members and their chores are then displayed in a recyclerview.
+     * @param dataSnapshot a snapshot of the database allowing use of information there.
      */
     private void showData(DataSnapshot dataSnapshot) {
         //clears both members and chores to allocate so they can be updated from the database
         members.clear();
         choresToAllocate.clear();
+        TextView dueText = findViewById(R.id.deadLineText);
+        String dsDeadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
+        deadline = dsDeadline;
+        String addedTime = "";
+        if(Integer.parseInt(deadline.substring(9,10)) >= 12){
+            addedTime = "pm";
+        }
+        else{
+            addedTime = "am";
+        }
+        dueText.setText("Chore Deadline: " + dsDeadline.substring(0, dsDeadline.length()-2) + addedTime);
+        deadLineCountdown();
 
         TextView textHouseName = (TextView) findViewById(R.id.textHouseName);
         String houseName = dataSnapshot.child("groups").child(houseID).child("name").getValue(String.class);
@@ -187,7 +190,7 @@ public class ChoreListActivity extends AppCompatActivity {
 
     /**
      * The random allocation of chores to household members
-     * @param view
+     * @param view view used for the event handling of the refresh button
      */
     public void assignChores(View view) {
         // Randomly assigns chores to members
@@ -231,11 +234,10 @@ public class ChoreListActivity extends AppCompatActivity {
         mRef.child("groups").child(houseID).child("members").setValue(members);
 
     }
-    // Need code to add each member of household as a viewable text with their chore for the week next to them
 
     /**
      * Opens SettingsActivity when button is clicked
-     * @param view
+     * @param view used for the event handling of the settings button
      */
     public void settings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
@@ -243,21 +245,9 @@ public class ChoreListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * Copies the current houseID and stores inside the clipboard for easy pasting. Good for putting into messenger
-     * @param view
-     */
-    public void copyHID(View view) {
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("HID", houseID);
-        clipboard.setPrimaryClip(clip);
 
-        Context context = getApplicationContext();
-        CharSequence text = houseID + " copied";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+
+
 
     /**
      * Reads the houseID from the shared preferences
@@ -269,4 +259,46 @@ public class ChoreListActivity extends AppCompatActivity {
         String houseID = exitHouseID.getString("houseID", "exit");
         return houseID;
     }
+
+
+    /**
+     *
+     */
+    private void deadLineCountdown() {
+        final TextView days = findViewById(R.id.days_text);
+        final TextView hours = findViewById(R.id.hours_text);
+        final TextView minutes = findViewById(R.id.minutes_text);
+        final TextView seconds = findViewById(R.id.seconds_text);
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    handler.postDelayed(this, 1000);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+                    Date choreDueDate = dateFormat.parse(deadline);
+                    Date current_date = new Date();
+                    if (!current_date.after(choreDueDate)) {
+                        long diff = choreDueDate.getTime() - current_date.getTime();
+                        long Days = diff / (24 * 60 * 60 * 1000);
+                        long Hours = diff / (60 * 60 * 1000) % 24;
+                        long Minutes = diff / (60 * 1000) % 60;
+                        long Seconds = diff / 1000 % 60;
+                        //
+                        days.setText(String.format("%02d", Days));
+                        hours.setText(String.format("%02d", Hours));
+                        minutes.setText(String.format("%02d", Minutes));
+                        seconds.setText(String.format("%02d", Seconds));
+                    } else {
+                        handler.removeCallbacks(runnable);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
+    }
+
+
 }

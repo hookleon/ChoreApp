@@ -26,6 +26,9 @@
         <activity   android:name=".ChoreListActivity"/>
         <activity   android:name=".AddChoresActivity" />
         <activity   android:name=".AddHouseMemberActivity" />
+        <activity android:name=".EditDeadlineActivity"
+                    android:parentActivityName=".SettingsActivity"/>
+        <activity android:name=".AddDeadlineActivity" />
         <activity   android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,15 +15,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class prompts the user to input a date and time for the deadline of their chores.
+ * Takes the user's input and passes it onto the database.
+ */
 public class AddDeadlineActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
 
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     public static final String PREF_HOUSE_ID = "PrefHouseID";
-
-    private List<String> choresToAllocate = new ArrayList<>();
-    private AddChoreAdapter adapter;
     private String houseID;
 
     @Override
@@ -35,10 +36,16 @@ public class AddDeadlineActivity extends AppCompatActivity {
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
     }
 
+    /**
+     * Initiated when the submit button is pressed.
+     * Assembles the date and time in the correct format and passes it onto the database.
+     * Once all is done starts a new intent with the ChoreListActivity.
+     * @param view is used for the event handling of the submit button.
+     */
     public void submitDates(View view){
         Intent intent = new Intent(this, ChoreListActivity.class);
-        EditText dateText = (EditText) findViewById(R.id.dateInput);
-        EditText timeText = (EditText) findViewById(R.id.timeInput);
+        EditText dateText = findViewById(R.id.dateInput);
+        EditText timeText = findViewById(R.id.timeInput);
         String dateInput = dateText.getText().toString();
         String timeInput = timeText.getText().toString();
 
@@ -48,12 +55,14 @@ public class AddDeadlineActivity extends AppCompatActivity {
         writeString(this, houseID);
         intent.putExtra(HOUSE_ID, houseID);
         intent.setAction("create");
-
-        //not sure if this line is needed
-        //intent.putExtra(EXTRA_MESSAGE, finishedDate);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param context
+     * @param hid
+     */
     public static void writeString(Context context, String hid) {
         SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
         SharedPreferences.Editor editor = exitHouseID.edit();
