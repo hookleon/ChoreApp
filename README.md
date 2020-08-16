@@ -3,16 +3,16 @@
 Chore Roulette is an app that allows households to manage and assign chores to its members. It randomly assigns chores to members and creates a simple roster for households to follow each week to keep your house tidy and clean while also being fair that one person doesn't have to do all the work.
 
  **Our Alpha release has these features:**
- * Creation of new household: add members and chores (only small list available for now)
- * Lists the members with assigned chores
- * Login using a unique house ID
- * Edit members in your household
- * Supports usage on multiple phones with fast update
+* Creation of new household: add members and chores (only small list available for now)
+* Lists the members with assigned chores
+* Login using a unique house ID
+* Edit members in your household
+* Supports usage on multiple phones with fast update
  
 **Our Beta release has these new features:**
- * Swap chores
- * Timer for each week
- * Change chores in settings
+* Swap chores
+* Timer for each week
+* Change chores in settings
 
 [![codecov](https://codecov.io/gh/hookleon/ChoreRoulette/branch/master/graph/badge.svg)](https://codecov.io/gh/hookleon/ChoreRoulette)
 [![Documentation](https://codedocs.xyz/hookleon/ChoreRoulette.svg)](https://codedocs.xyz/hookleon/ChoreRoulette/)
