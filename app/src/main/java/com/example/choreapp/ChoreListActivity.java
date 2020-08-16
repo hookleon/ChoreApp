@@ -150,7 +150,6 @@ public class ChoreListActivity extends AppCompatActivity {
         dueText.setText("Chore Deadline: " + dsDeadline.substring(0, dsDeadline.length()-2) + addedTime);
         deadLineCountdown();
 
-        TextView textHouseName = (TextView) findViewById(R.id.textHouseName);
         String houseName = dataSnapshot.child("groups").child(houseID).child("name").getValue(String.class);
         getSupportActionBar().setTitle(houseName);
 
@@ -244,10 +243,6 @@ public class ChoreListActivity extends AppCompatActivity {
         intent.putExtra(HOUSE_ID, houseID);
         startActivity(intent);
     }
-
-
-
-
 
     /**
      * Reads the houseID from the shared preferences

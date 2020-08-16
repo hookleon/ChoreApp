@@ -59,7 +59,7 @@ public class AddChoresActivity extends AppCompatActivity {
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
 
         // RecView stuff
-        RecyclerView recView = (RecyclerView) findViewById(R.id.recView2);
+        RecyclerView recView = findViewById(R.id.recView2);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
@@ -73,8 +73,7 @@ public class AddChoresActivity extends AppCompatActivity {
      * @param view
      */
     public void addChore (View view){
-        //Need code that will add selected chore to the list of chores house will use
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
         final String chore = spinner.getSelectedItem().toString();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -117,7 +116,7 @@ public class AddChoresActivity extends AppCompatActivity {
 
     /**
      * Stores the chorelist in the database
-     * @param view
+     * @param view is used for the event handling of the confirm button.
      */
     public void confirmChores (View view) {
         if (choresToAllocate.size() < 1) {

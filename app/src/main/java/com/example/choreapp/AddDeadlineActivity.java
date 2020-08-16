@@ -12,9 +12,6 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class prompts the user to input a date and time for the deadline of their chores.
  * Takes the user's input and passes it onto the database.

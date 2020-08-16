@@ -22,12 +22,8 @@ import java.util.List;
 public class EditDeadlineActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
-
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     public static final String PREF_HOUSE_ID = "PrefHouseID";
-
-    private List<String> choresToAllocate = new ArrayList<>();
-    private AddChoreAdapter adapter;
     private String houseID;
 
     @Override
