@@ -38,7 +38,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Links the app with the Firebase database.
+ * ChoreListActivity is the main screen logged in users will see
+ * It displays the names of members in a household, the chores they have been allocated, a timer showing how long left to do chores and various buttons for settings
  */
 public class ChoreListActivity extends AppCompatActivity {
 
@@ -50,17 +51,15 @@ public class ChoreListActivity extends AppCompatActivity {
     public String houseID;
     public static final String MEMB_ID = "com.example.choreapp.MEMB_ID";
     public static final String MEMB_POS = "com.example.choreapp.MEMB_POS";
-
     public static final String PREF_HOUSE_ID = "PrefHouseID";
 
     private List<Member> members = new ArrayList<>();
     private List<String> membNames = new ArrayList<>();
     private List<String> choresToAllocate = new ArrayList<>();
-
     private ListAdapter adapter;
 
     /**
-     *
+     * Runs when ChoreListActivity first opens
      * @param savedInstanceState
      */
     @Override
@@ -68,23 +67,10 @@ public class ChoreListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_list);
 
-        //House ID can come from multiple different activities, new group or preexisting group
-        Intent intent = getIntent();
-        if(intent.getAction().equals("create")) {
-            houseID = intent.getStringExtra(AddChoresActivity.HOUSE_ID);
-        } else if(intent.getAction().equals("savedLogin")) {
-            houseID = intent.getStringExtra(MainActivity.HOUSE_ID);
-        } else if(intent.getAction().equals("login")) {
-            houseID = intent.getStringExtra(LoginActivity.HOUSE_ID);
-        } else if(intent.getAction().equals("settings")) {
-            houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
-        } else if(intent.getAction().equals("swap")) {
-            houseID = intent.getStringExtra(SwapChoresActivity.HOUSE_ID);
-        }
-
+        houseID = readString(this);
         final TextView textHID = findViewById(R.id.textHID);
         textHID.setText("HID: " + houseID);
-        writeString(this, houseID);
+        //writeString(this, houseID);
 
         for(int i = 0; i < members.size(); i++) {
             membNames.add(members.get(i).getName());
@@ -124,9 +110,7 @@ public class ChoreListActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Member get = members.get(position); //Want to get this member into the builder so that it can send it through the intent to either profile or chore swap activity
                         String id = get.getID();
-                        //builder.setMessage(position);
                         profIntent.putExtra(MEMB_ID, id);
-
                         swapIntent.putExtra(MEMB_ID, id);
                         swapIntent.putExtra(HOUSE_ID, houseID);
                         swapIntent.putExtra(MEMB_POS, String.valueOf(position));
@@ -155,7 +139,7 @@ public class ChoreListActivity extends AppCompatActivity {
     }
 
     /**
-     * Clears both members and chores to allocate so they can be updated from the database.
+     * Displays house members and their chores in a recyclerview
      * @param dataSnapshot
      */
     private void showData(DataSnapshot dataSnapshot) {
@@ -250,7 +234,7 @@ public class ChoreListActivity extends AppCompatActivity {
     // Need code to add each member of household as a viewable text with their chore for the week next to them
 
     /**
-     *
+     * Opens SettingsActivity when button is clicked
      * @param view
      */
     public void settings(View view) {
@@ -260,7 +244,7 @@ public class ChoreListActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Copies the current houseID and stores inside the clipboard for easy pasting. Good for putting into messenger
      * @param view
      */
     public void copyHID(View view) {
@@ -275,13 +259,11 @@ public class ChoreListActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public static void writeString(Context context, String hid) {
-        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
-        SharedPreferences.Editor editor = exitHouseID.edit();
-        editor.putString("houseID", hid);
-        editor.commit();
-    }
-
+    /**
+     * Reads the houseID from the shared preferences
+     * @param context
+     * @return houseID is the houseID found in shared preferences
+     */
     public static String readString(Context context) {
         SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
         String houseID = exitHouseID.getString("houseID", "exit");

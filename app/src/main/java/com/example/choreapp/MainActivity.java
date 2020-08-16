@@ -26,9 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 /**
- * This is the main program.
+ * This is the MainActivity that runs when the app starts
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREF_HOUSE_ID = "PrefHouseID";
 
     /**
-     *
+     * The app will attempt to login if a houseID is stored on the phone
      * @param savedInstanceState
      */
     @Override
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         TextView test = findViewById(R.id.test);
         test.setText(houseID);
 
-        //attemptLogin(houseID);
+        attemptLogin(houseID);
     }
 
     /**
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Changes the activity to LoginActivity when login button is clicked
      * @param view
      */
     public void login (View view) {
@@ -82,25 +80,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Reads the houseID stored in a shared preference file. Used for quick startup once an account is created
+     * @param context
+     * @return houseID inside shared preference
+     */
     public static String readString(Context context) {
         SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
         String houseID = exitHouseID.getString("houseID", "exit");
         return houseID;
     }
 
+    /**
+     * Attempts to login to a previously created account if a houseID is stored in a shared preference file
+     * @param hid the houseID
+     */
     public void attemptLogin(final String hid) {
         mRef.child("groups").child(hid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     proceedLogin(hid);
-                }
-                else{
-                    Context context = getApplicationContext();
-                    CharSequence text = hid + " doesn't exist";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
                 }
             }
 
@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * If the houseID points to an account, it changes to ChoreListActivity
+     * @param hid the houseID
+     */
     public void proceedLogin(String hid){
         Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID, hid);

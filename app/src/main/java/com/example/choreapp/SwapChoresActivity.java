@@ -9,7 +9,9 @@ package com.example.choreapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * SwapChoresActivity runs when you click swap chores in the popup menu in ChoreListActivity
  */
 public class SwapChoresActivity extends AppCompatActivity {
 
@@ -54,8 +56,8 @@ public class SwapChoresActivity extends AppCompatActivity {
     private TextView test;
 
     /**
-     *
-     *  @param savedInstanceState
+     * Runs when SwapChoresActivity first opens
+     * @param savedInstanceState
      */
 
     @Override
@@ -82,8 +84,8 @@ public class SwapChoresActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param ds
+     * swapChores runs whenever the database updates (at least once when the activity first begins)
+     * @param ds a snapshot of the database allowing use of information there
      */
     public void swapChores(DataSnapshot ds) {
         //Organises data to grab from database as the member initiating the chore swap
@@ -150,16 +152,33 @@ public class SwapChoresActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Stores the new changes in the database so the swap is finalised
+     * @param view
+     */
     public void confirmChanges(View view) {
         /*
-            confirmChores runs when the confirmChores button is pressed. It will do the swapping of chores
-
             members is an array of all members in household
             membIn is the member initiating the swap of chores
             membOut is the member swapping chore with membIn
             membInPos is the position of membIn in the members array
             membOutPos is the position of membOut in the members array
         */
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Swap chores")
+                .setPositiveButton("Confirm Changes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertConfirm();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Empty
+                    }
+                });
 
         if(membOut.getID().equals(membIn.getID())) {
             Context context = getApplicationContext();
@@ -171,7 +190,7 @@ public class SwapChoresActivity extends AppCompatActivity {
             List<String> choreOut = membOut.getChores();
             String swapOut = spinMembIn.getSelectedItem().toString();
             int swapOutPos = spinMembIn.getSelectedItemPosition();
-            int membOutPos = spinMembTo.getSelectedItemPosition();
+
             String swapIn = spinMembOut.getSelectedItem().toString();
             int swapInPos = spinMembOut.getSelectedItemPosition();
 
@@ -182,16 +201,24 @@ public class SwapChoresActivity extends AppCompatActivity {
 
             membIn.setChores(choreIn);
             membOut.setChores(choreOut);
-
-            mRef.child("users").child(membIn.getID()).setValue(membIn);
-            mRef.child("users").child(membOut.getID()).setValue(membOut);
-            mRef.child("groups").child(houseID).child("members").child(String.valueOf(membOutPos)).setValue(membOut);
-            mRef.child("groups").child(houseID).child("members").child(String.valueOf(membPos)).setValue(membIn);
-
-            Intent intent = new Intent(this, ChoreListActivity.class);
-            intent.putExtra(HOUSE_ID, houseID);
-            intent.setAction("swap");
-            startActivity(intent);
+            builder.setMessage(membIn.getName() + " will swap " + swapOut + " with " + membOut.getName() + " for " + swapIn);
+            builder.show();
         }
+    }
+
+    /**
+     * When finally confirmed, the new chorelists will be pushed to each user's section in the database and return you to ChoreListActivity
+     */
+    void alertConfirm() {
+        int membOutPos = spinMembTo.getSelectedItemPosition();
+        mRef.child("users").child(membIn.getID()).setValue(membIn);
+        mRef.child("users").child(membOut.getID()).setValue(membOut);
+        mRef.child("groups").child(houseID).child("members").child(String.valueOf(membOutPos)).setValue(membOut);
+        mRef.child("groups").child(houseID).child("members").child(String.valueOf(membPos)).setValue(membIn);
+
+        Intent intent = new Intent(this, ChoreListActivity.class);
+        intent.putExtra(HOUSE_ID, houseID);
+        intent.setAction("swap");
+        startActivity(intent);
     }
 }

@@ -20,11 +20,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * EditChoreListActivity
  */
 public class EditChoreListActivity extends AppCompatActivity {
 
@@ -45,21 +42,8 @@ public class EditChoreListActivity extends AppCompatActivity {
     private DatabaseReference mRef = database.getReference();
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
     private String houseID;
-
     private List<String> choresToAllocate = new ArrayList<>();
-
     private AddChoreAdapter adapter;
-
-    private List<String> choreList = new ArrayList<>();
-
-    //private TextView textView;
-    private EditText editHouse;
-
-    private Member membIn;
-    private Member membOut;
-    private List<String> choreIn;
-    private String membID;
-
 
     /**
      *
@@ -72,9 +56,6 @@ public class EditChoreListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         houseID = intent.getStringExtra(SettingsActivity.HOUSE_ID);
-        editHouse = findViewById(R.id.editHouse);
-
-
 
         // RecView stuff
         RecyclerView recView = (RecyclerView) findViewById(R.id.recView2);
@@ -102,13 +83,8 @@ public class EditChoreListActivity extends AppCompatActivity {
         choresToAllocate.clear();
         String chores = "";
         DataSnapshot dsChores = dataSnapshot.child("groups").child(houseID).child("chores");
-        DataSnapshot dsMemChores;
         long nChores = dsChores.getChildrenCount();
-        long nMemChores;
 
-        String name = "";
-        String id = "";
-        String hid = "";
         //Gets chores to allocate from database
         for(int i = 0; i < nChores; i++){
             chores = dsChores.child(String.valueOf(i)).getValue(String.class);
@@ -117,13 +93,7 @@ public class EditChoreListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-
-        /**
-         *
-         * @param view
-         */
     public void addChore (View view){
-        //Need code that will add selected chore to the list of chores house will use
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         final String chore = spinner.getSelectedItem().toString();
 
