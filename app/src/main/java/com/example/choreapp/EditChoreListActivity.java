@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * EditChoreListActivity
+ * EditChoreListActivity is where users can edit what chores their household does
  */
 public class EditChoreListActivity extends AppCompatActivity {
 
@@ -46,7 +46,7 @@ public class EditChoreListActivity extends AppCompatActivity {
     private AddChoreAdapter adapter;
 
     /**
-     *
+     * Displays the chores when EditChoreListActivity runs
      * @param savedInstanceState
      */
     @Override
@@ -79,6 +79,10 @@ public class EditChoreListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays the chores stored under the household in the database
+     * @param dataSnapshot a snapshot of the database
+     */
     private void showData(DataSnapshot dataSnapshot) {
         choresToAllocate.clear();
         String chores = "";
@@ -93,6 +97,10 @@ public class EditChoreListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Adds a chore to the chorelist
+     * @param view
+     */
     public void addChore (View view){
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         final String chore = spinner.getSelectedItem().toString();
@@ -136,7 +144,7 @@ public class EditChoreListActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Confirms and stores the updated chorelist to the database
      * @param view
      */
     public void confirmChores (View view) {

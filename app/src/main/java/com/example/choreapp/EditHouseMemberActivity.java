@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- *
+ * EditHouseMemberActivity runs from SettingsActivity as a way to edit house members
  */
 public class EditHouseMemberActivity extends AppCompatActivity{
 
@@ -51,7 +51,7 @@ public class EditHouseMemberActivity extends AppCompatActivity{
     private EditText editHouse;
 
     /**
-     *
+     * Runs when activity first opens
      * @param savedInstanceState
      */
     @Override
@@ -86,7 +86,6 @@ public class EditHouseMemberActivity extends AppCompatActivity{
 
     /**
      * Used to clear both members and chores to allocate so they can be updated from the database
-     *
      * @param dataSnapshot
      */
     private void showData(DataSnapshot dataSnapshot) {
@@ -137,12 +136,11 @@ public class EditHouseMemberActivity extends AppCompatActivity{
     }
 
     /**
-     *
+     * Commits changes of house members into the database
      * @param view
      */
     public void confirmMembers (View view) {
         //Adds all members under the name of new household
-        //EditText editHouse = (EditText) findViewById(R.id.editHouse);
         String house = editHouse.getText().toString();
         if (members.size() != 0) {
             mRef.child("groups").child(houseID).child("members").setValue(members);
@@ -150,9 +148,6 @@ public class EditHouseMemberActivity extends AppCompatActivity{
 
             for (int i = 0; i < members.size(); i++) {
                 mRef.child("users").child(members.get(i).getID()).setValue(members.get(i));
-                //mRef.child("users").child(members.get(i).getID()).child(String.valueOf(i)).child("chores").setValue(members.get(i).getChores());
-                //mRef.child("groups").child(houseID).child("members").child(String.valueOf(i)).setValue(members.get(i).getChores());
-                //mRef.child("users").child(members.get(i).getID()).child("group").setValue(members.get(i).getHouseID());
             }
 
             // Moves to the next page where you pick chores

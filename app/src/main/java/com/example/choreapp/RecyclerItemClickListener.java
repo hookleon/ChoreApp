@@ -14,14 +14,14 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- *
+ * Allows the chorelist in ChoreListActivity to react to touch
  */
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private OnItemClickListener mListener;
     private GestureDetector mGestureDetector;
 
     /**
-     *
+     * Provides the recyclerview items a click listener
      */
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
@@ -30,7 +30,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     }
 
     /**
-     *
+     * When an item in the list is clicked, it returns the position
      * @param context
      * @param recyclerView
      * @param listener
@@ -54,7 +54,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     }
 
     /**
-     *
+     * Runs when intercept touch is triggered
      * @param view
      * @param e
      * @return
@@ -70,7 +70,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     }
 
     /**
-     *
+     * Runs when touched
      * @param view
      * @param motionEvent
      */
@@ -80,7 +80,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     }
 
     /**
-     *
+     * Runs when intercept touch is cancelled
      * @param disallowIntercept
      */
     @Override

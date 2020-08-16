@@ -4,17 +4,13 @@
   Chore Roulette App
   Leon Hook, Magnus McGee and Tiaan Stevenson-Brunt  
  */
-/** \mainpage My Personal Index Page
+/** \mainpage Chore Roulette Index Page
  *
  * \section intro_sec Introduction
  *
- * This is the introduction.
- *
- * \section install_sec Installation
- *
- * \subsection step1 Step 1: Opening the box
- *
- * etc...
+ * Chore Roulette is an app that allows users to create groups in which they can allocate chores to
+ * a household. Within each household, you can view members, the chores allocated to each members
+ * and how much time left until the chore allocation resets.
  */
 package com.example.choreapp;
 
@@ -26,7 +22,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String houseID = readString(this);
-        TextView test = findViewById(R.id.test);
-        test.setText(houseID);
-
         attemptLogin(houseID);
     }
 
