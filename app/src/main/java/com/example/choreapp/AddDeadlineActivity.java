@@ -50,8 +50,6 @@ public class AddDeadlineActivity extends AppCompatActivity {
 
         mRef.child("groups").child(houseID).child("deadline").setValue(finishedDate);
         writeString(this, houseID);
-        intent.putExtra(HOUSE_ID, houseID);
-        intent.setAction("create");
         startActivity(intent);
     }
 

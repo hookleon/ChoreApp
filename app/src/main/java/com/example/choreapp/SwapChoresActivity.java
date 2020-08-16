@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,15 +38,19 @@ public class SwapChoresActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
+    public static final String PREF_HOUSE_ID = "PrefHouseID";
+
     private String membID;
     private String houseID;
     private int membPos;
+
     private TextView txtMembInChores;
     private TextView txtMembOut;
     private TextView txtMembOutChores;
     private Spinner spinMembIn;
     private Spinner spinMembTo;
     private Spinner spinMembOut;
+
     private Member membIn;
     private Member membOut;
     private List<String> choreIn;
@@ -70,7 +75,7 @@ public class SwapChoresActivity extends AppCompatActivity {
         txtMembOutChores.setText("Other person's chores");
 
         membID = intent.getStringExtra(ChoreListActivity.MEMB_ID);
-        houseID = intent.getStringExtra(ChoreListActivity.HOUSE_ID);
+        houseID = readString(this);
         String strPos = intent.getStringExtra(ChoreListActivity.MEMB_POS);
         membPos = Integer.parseInt(strPos);
         mRef.addValueEventListener(new ValueEventListener() {
@@ -221,5 +226,16 @@ public class SwapChoresActivity extends AppCompatActivity {
         intent.putExtra(HOUSE_ID, houseID);
         intent.setAction("swap");
         startActivity(intent);
+    }
+
+    /**
+     * Reads the houseID stored in a shared preference file. Used for quick startup once an account is created
+     * @param context
+     * @return houseID inside shared preference
+     */
+    public static String readString(Context context) {
+        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
+        String houseID = exitHouseID.getString("houseID", "exit");
+        return houseID;
     }
 }

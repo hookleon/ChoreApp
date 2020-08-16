@@ -35,8 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Intent intent = getIntent();
-        houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
+        houseID = readString(this);
         final TextView textHID = findViewById(R.id.textHID);
         textHID.setText("HID: " + houseID);
     }
@@ -120,5 +119,16 @@ public class SettingsActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    /**
+     * Reads the houseID stored in a shared preference file.
+     * @param context
+     * @return houseID inside shared preference
+     */
+    public static String readString(Context context) {
+        SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
+        String houseID = exitHouseID.getString("houseID", "exit");
+        return houseID;
     }
 }
