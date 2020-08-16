@@ -18,6 +18,7 @@ jobs:
     - name: Build with Gradle
       run: |
         ./gradlew build
+        ./gradlew connectedCheck
         bash <(curl -s https://codecov.io/bash)
 
 
