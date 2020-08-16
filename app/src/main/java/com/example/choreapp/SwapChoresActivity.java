@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * SwapChoresActivity runs when you click swap chores in the popup menu in ChoreListActivity
  */
 public class SwapChoresActivity extends AppCompatActivity {
 
@@ -56,8 +56,8 @@ public class SwapChoresActivity extends AppCompatActivity {
     private TextView test;
 
     /**
-     *
-     *  @param savedInstanceState
+     * Runs when SwapChoresActivity first opens
+     * @param savedInstanceState
      */
 
     @Override
@@ -84,8 +84,8 @@ public class SwapChoresActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param ds
+     * swapChores runs whenever the database updates (at least once when the activity first begins)
+     * @param ds a snapshot of the database allowing use of information there
      */
     public void swapChores(DataSnapshot ds) {
         //Organises data to grab from database as the member initiating the chore swap
@@ -152,10 +152,12 @@ public class SwapChoresActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Stores the new changes in the database so the swap is finalised
+     * @param view
+     */
     public void confirmChanges(View view) {
         /*
-            confirmChores runs when the confirmChores button is pressed. It will do the swapping of chores
-
             members is an array of all members in household
             membIn is the member initiating the swap of chores
             membOut is the member swapping chore with membIn
@@ -204,6 +206,9 @@ public class SwapChoresActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * When finally confirmed, the new chorelists will be pushed to each user's section in the database and return you to ChoreListActivity
+     */
     void alertConfirm() {
         int membOutPos = spinMembTo.getSelectedItemPosition();
         mRef.child("users").child(membIn.getID()).setValue(membIn);

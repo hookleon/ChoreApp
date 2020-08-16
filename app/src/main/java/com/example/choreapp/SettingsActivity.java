@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 
 /**
- *
+ * SettingsActivity shows a menu of settings users can adjust
  */
 public class SettingsActivity extends AppCompatActivity {
     public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";
@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     private String houseID;
 
     /**
-     *
+     * Runs when SettingsActivity first opens
      * @param savedInstanceState
      */
     @Override
@@ -36,16 +36,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
-
-        /*OnBackPressedCallback cb = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backNav();
-            }
-        };*/
-
     }
 
+    /**
+     * Changes to EditChoreListActivity
+     * @param view
+     */
     public void editChores(View view) {
         Intent intent = new Intent(this, EditChoreListActivity.class);
         intent.putExtra(HOUSE_ID, houseID);
@@ -54,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Changes to EditHouseMemberActivity
      * @param view
      */
     public void editMembers(View view) {
@@ -65,24 +61,37 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Sends you back to ChoreListActivity
      * @param view
      */
     public void back(View view){
         backNav();
     }
 
+    /**
+     * Sends you back to ChoreListActivity
+     */
     public void backNav() {
         Intent intent = new Intent(this, ChoreListActivity.class);
         intent.putExtra(HOUSE_ID, houseID);
         intent.setAction("settings");
         startActivity(intent);
     }
+
+    /**
+     * Sends you back to MainActivity while also removing current houseID from shared preferences
+     * @param view
+     */
     public void logout(View view) {
         writeString(this);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Removes the current houseID from shared preferences to stop auto login when app starts
+     * @param context
+     */
     public static void writeString(Context context) {
         SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
         SharedPreferences.Editor editor = exitHouseID.edit();

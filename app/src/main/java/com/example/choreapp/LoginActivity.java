@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- *
+ * LoginActivity allows users to enter a houseID that allows access to their previously created household
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     public String hid;
 
     /**
-     *
+     * Creates the UI of the login screen
      * @param savedInstanceState
      */
     @Override
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Runs when the login button is clicked. Checks what is in editHID and logs in if houseID exists in database
      * @param view
      */
     public void loginClick(final View view){
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Runs when houseID entered exists in the database
      */
     public void proceedLogin(){
         writeString(this, hid);
@@ -87,6 +87,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Stores houseID of login into the shared preferences file for easy relogin
+     * @param context
+     * @param hid houseID to store in shared preferences
+     */
     public static void writeString(Context context, String hid) {
         SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
         SharedPreferences.Editor editor = exitHouseID.edit();
