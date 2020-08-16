@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- *
+ * AddHouseMemberActivity runs when setting up household
  */
 public class AddHouseMemberActivity extends AppCompatActivity{
 
@@ -45,7 +45,7 @@ public class AddHouseMemberActivity extends AppCompatActivity{
     private MyAdapter adapter;
 
     /**
-     *
+     * Displays member names when first opens
      * @param savedInstanceState
      */
     @Override

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- *
+ * LoadingActivity may end up being the first screen you say. Will allow a nicer opening before logging in using shared preference login
  */
 public class LoadingActivity extends AppCompatActivity {
 

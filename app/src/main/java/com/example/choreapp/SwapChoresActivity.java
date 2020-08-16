@@ -43,8 +43,10 @@ public class SwapChoresActivity extends AppCompatActivity {
     private String houseID;
     private int membPos;
 
+    private TextView txtMembInChores;
+    private TextView txtMembOut;
+    private TextView txtMembOutChores;
     private Spinner spinMembIn;
-
     private Spinner spinMembTo;
     private Spinner spinMembOut;
 
@@ -52,8 +54,6 @@ public class SwapChoresActivity extends AppCompatActivity {
     private Member membOut;
     private List<String> choreIn;
     private List<Member> members;
-
-    private TextView test;
 
     /**
      * Runs when SwapChoresActivity first opens
@@ -66,6 +66,13 @@ public class SwapChoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_swap_chores);
 
         Intent intent = getIntent();
+        txtMembInChores = findViewById(R.id.membInChore);
+        txtMembOut = findViewById(R.id.membOut);
+        txtMembOutChores = findViewById(R.id.membOutChore);
+        txtMembInChores.setText("Your chores");
+        txtMembOut.setText("Person you give to");
+        txtMembOutChores.setText("Other person's chores");
+
         membID = intent.getStringExtra(ChoreListActivity.MEMB_ID);
         houseID = intent.getStringExtra(ChoreListActivity.HOUSE_ID);
         String strPos = intent.getStringExtra(ChoreListActivity.MEMB_POS);
@@ -112,7 +119,6 @@ public class SwapChoresActivity extends AppCompatActivity {
         members = new ArrayList<>();
         List<String> membNames = new ArrayList<>();
         Member member;
-        test = (TextView) findViewById(R.id.test);
 
         long nMembers = dsMembers.getChildrenCount();
         for(int i = 0; i < nMembers; i++) {
@@ -148,7 +154,6 @@ public class SwapChoresActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 //Empty
             }
-
         });
     }
 
