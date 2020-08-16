@@ -14,14 +14,14 @@ import android.os.Bundle;
 //import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * Creates instance object to lin the app with the Firebase database.
+ * MemberProfileActivity displays the data of household members
  */
 public class MemberProfileActivity extends AppCompatActivity {
     //private FirebaseDatabase database = FirebaseDatabase.getInstance();
     //private DatabaseReference mRef = database.getReference();
 
     /**
-     *
+     * Runs when first opened
      * @param savedInstanceState
      */
     @Override

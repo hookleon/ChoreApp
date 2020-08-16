@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
- * The adapter allows the app to display names of users when adding names to the household
+ * The adapter allows the app to display names and the chores each name must do
  */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     private List<Member> mDataset;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+    /**
+     * Provides a reference to the views for each data item
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView name;

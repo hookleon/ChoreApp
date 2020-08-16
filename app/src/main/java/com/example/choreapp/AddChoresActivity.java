@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides a link from the app to the Firebase database
+ * AddChoresActivity runs during the setup of a household
  */
 public class AddChoresActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -47,7 +47,7 @@ public class AddChoresActivity extends AppCompatActivity {
     private String houseID;
 
     /**
-     *
+     * Display stuff runs when AddChoresActivity runs first
      * @param savedInstanceState
      */
     @Override
@@ -69,7 +69,7 @@ public class AddChoresActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Adds a chore to the chorelist
      * @param view
      */
     public void addChore (View view){
@@ -116,7 +116,7 @@ public class AddChoresActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Stores the chorelist in the database
      * @param view
      */
     public void confirmChores (View view) {
@@ -137,6 +137,11 @@ public class AddChoresActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Writes the houseID into shared preferences for easy login when opening app again
+     * @param context
+     * @param hid houseID to be stored in shared preferences
+     */
     public static void writeString(Context context, String hid) {
         SharedPreferences exitHouseID = context.getSharedPreferences(PREF_HOUSE_ID, 0);
         SharedPreferences.Editor editor = exitHouseID.edit();
