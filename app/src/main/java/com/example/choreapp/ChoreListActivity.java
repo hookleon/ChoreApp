@@ -19,6 +19,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
@@ -56,6 +59,24 @@ public class ChoreListActivity extends AppCompatActivity {
     private String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
     private String deadline;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chorelist_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra(HOUSE_ID, houseID);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Runs when ChoreListActivity first opens
@@ -65,11 +86,14 @@ public class ChoreListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_list);
+
+        // Sets the houseID so data can be accessed
         houseID = readString(this);
         for(int i = 0; i < members.size(); i++) {
             membNames.add(members.get(i).getName());
         }
-        //Item click
+
+        // Opens menu when click on a member
         final Intent swapIntent = new Intent(this, SwapChoresActivity.class);
         final Intent profIntent = new Intent(this, MemberProfileActivity.class);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -88,7 +112,8 @@ public class ChoreListActivity extends AppCompatActivity {
                 }
             }
         });
-        // RecView stuff
+
+        // Sets up the list of members and their chores
         RecyclerView recView = (RecyclerView) findViewById(R.id.recView3);
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
@@ -126,7 +151,7 @@ public class ChoreListActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        }
+    }
 
     /**
      * Gathers the house ID, the house members, the chores and the deadline from the database.
@@ -232,16 +257,6 @@ public class ChoreListActivity extends AppCompatActivity {
         }
         mRef.child("groups").child(houseID).child("members").setValue(members);
 
-    }
-
-    /**
-     * Opens SettingsActivity when button is clicked
-     * @param view used for the event handling of the settings button
-     */
-    public void settings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        intent.putExtra(HOUSE_ID, houseID);
-        startActivity(intent);
     }
 
     /**

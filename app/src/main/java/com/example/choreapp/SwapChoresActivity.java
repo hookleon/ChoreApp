@@ -102,7 +102,7 @@ public class SwapChoresActivity extends AppCompatActivity {
         String id = membID;
         String hid = houseID;
         membIn = new Member(name, id, hid);
-        choreIn = new ArrayList<>();
+        choreIn = new ArrayList<String>();
         String chore;
         long nMemChores = dsMemIn.child("chores").getChildrenCount();
         for(int i = 0; i < nMemChores; i++){
@@ -117,8 +117,8 @@ public class SwapChoresActivity extends AppCompatActivity {
         spinMembIn.setAdapter(spinAdapIn);
 
         DataSnapshot dsMembers = ds.child("groups").child(houseID).child("members");
-        members = new ArrayList<>();
-        List<String> membNames = new ArrayList<>();
+        members = new ArrayList<Member>();
+        List<String> membNames = new ArrayList<String>();
         Member member;
 
         long nMembers = dsMembers.getChildrenCount();

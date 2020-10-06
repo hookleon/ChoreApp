@@ -12,11 +12,10 @@
         android:id="@+id/edit_members_button"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="44dp"
         android:onClick="editMembers"
         android:text="Edit Members"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +23,7 @@
         android:id="@+id/edit_chores_button"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:onClick="editChores"
         android:text="Edit Chores "
         android:visibility="visible"
@@ -35,14 +34,13 @@
     <Button
         android:id="@+id/button10"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:onClick="logout"
         android:text="Logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editDeadline" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textHID"
@@ -56,7 +54,7 @@
     <Button
         android:id="@+id/button9"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:hint="@string/button_copy_hid"
@@ -69,11 +67,22 @@
         android:id="@+id/editDeadline"
         android:layout_width="195dp"
         android:layout_height="59dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:onClick="editDeadline"
         android:text="Edit Deadline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_chores_button" />
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="195dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="32dp"
+        android:onClick="reshuffle"
+        android:text="Reshuffle Chores"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editDeadline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
