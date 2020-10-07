@@ -6,9 +6,13 @@
  */
 package com.example.choreapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import java.util.List;
  */
 public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyViewHolder> {
     private List<String> mDataset;
+    private Context mContext;
 
     /**
      * Provides a reference to the views for each data item
@@ -30,12 +35,14 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView chore;
-        public ImageButton remove;
+        public TextView edit;
+        public TextView remove;
 
         public MyViewHolder(View v) {
             super(v);
             chore = (TextView) v.findViewById(R.id.name);
-            remove = (ImageButton) v.findViewById(R.id.remove);
+            edit = (TextView) v.findViewById(R.id.edit);
+            remove = (TextView) v.findViewById(R.id.remove);
         }
     }
 
@@ -43,8 +50,9 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
      * Provide a suitable constructor (depends on the kind of dataset)
      * @param myDataset
      * */
-    public AddChoreAdapter(List<String> myDataset) {
+    public AddChoreAdapter(List<String> myDataset, Context myContext) {
         mDataset = myDataset;
+        mContext = myContext;
     }
 
     /**
@@ -70,8 +78,35 @@ public class AddChoreAdapter extends RecyclerView.Adapter<AddChoreAdapter.MyView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         String m = mDataset.get(position);
+        // Chore name
         holder.chore.setText(m);
 
+        // Edit Chore
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                final EditText editChore = new EditText(mContext);
+                builder.setTitle("Edit Name: " + mDataset.get(position));
+                builder.setView(editChore);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDataset.set(position, editChore.getText().toString());
+                        notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Nothing
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        // Remove Chore
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
