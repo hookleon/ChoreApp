@@ -46,7 +46,7 @@ public class AddChoresActivity extends AppCompatActivity {
     private String houseID;
 
     /**
-     * Display stuff runs when AddChoresActivity runs first
+     * Sets up the display when AddChoresActivity runs first
      * @param savedInstanceState
      */
     @Override

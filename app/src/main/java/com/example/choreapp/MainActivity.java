@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // Attempts login 4 times in 2 seconds
         new CountDownTimer(2000, 500) {
             public void onTick(long millisUntilFinished) {
-                //attemptLogin(houseID);
+                attemptLogin(houseID);
             }
             public void onFinish() {
                 Button btnCreate = findViewById(R.id.btnCreate);

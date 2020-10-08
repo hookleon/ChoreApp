@@ -16,11 +16,8 @@
                     android:parentActivityName=".SettingsActivity"/>
         <activity   android:name=".SwapChoresActivity"
                     android:parentActivityName=".ChoreListActivity"/>
-        <activity   android:name=".MemberProfileActivity"
-                    android:parentActivityName=".ChoreListActivity"/>
         <activity   android:name=".SettingsActivity"
                     android:parentActivityName=".ChoreListActivity"/>
-        <activity   android:name=".LoadingActivity" />
         <activity   android:name=".LoginActivity"
                     android:parentActivityName=".MainActivity"/>
         <activity   android:name=".ChoreListActivity"/>
