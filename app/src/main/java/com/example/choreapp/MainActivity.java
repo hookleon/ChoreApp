@@ -20,14 +20,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.sql.Time;
+import java.util.Timer;
 
 
 /**
@@ -38,11 +46,12 @@ public class MainActivity extends AppCompatActivity {
     //links the app to the database stored on firebase
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mRef = database.getReference();
-    public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  //Passes houseid to next activity so chores can be added to activity
+    public static final String HOUSE_ID = "com.example.choreapp.HOUSE_ID";  // Passes house id to next activity so chores can be added to activity
     public static final String PREF_HOUSE_ID = "PrefHouseID";
 
     /**
-     * The app will attempt to login if a houseID is stored on the phone
+     * The app will attempt to login 4 times if a houseID is stored on the phone. If login fails,
+     * main menu will load.
      * @param savedInstanceState
      */
     @Override
@@ -50,9 +59,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String houseID = readString(this);
-        attemptLogin(houseID);
+        final String houseID = readString(this);
+        final ImageView imgChoreRoulette = findViewById(R.id.imageView);
+
+        imgChoreRoulette.setVisibility(View.VISIBLE);
+        imgChoreRoulette.setBackgroundResource(R.drawable.ic_chores0);
+
+        // Attempts login 4 times in 2 seconds
+        new CountDownTimer(2000, 500) {
+            public void onTick(long millisUntilFinished) {
+                attemptLogin(houseID);
+            }
+            public void onFinish() {
+                Button btnCreate = findViewById(R.id.btnCreate);
+                Button btnLogin = findViewById(R.id.btnLogin);
+                btnCreate.setVisibility(View.VISIBLE);
+                btnLogin.setVisibility(View.VISIBLE);
+                imgChoreRoulette.setVisibility(View.INVISIBLE);
+            }
+        }.start();
     }
+
 
     /**
      * Changes the activity to AddMemberActivity when CreateHousehold Button is Clicked

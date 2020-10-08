@@ -67,7 +67,7 @@ public class EditHouseMemberActivity extends AppCompatActivity{
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new MyAdapter(members);
+        adapter = new MyAdapter(members, this);
         recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recView.setAdapter(adapter);
 

@@ -62,7 +62,7 @@ public class EditChoreListActivity extends AppCompatActivity {
         LinearLayoutManager recLayout = new LinearLayoutManager(this);
         recView.setLayoutManager(recLayout);
         recView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new AddChoreAdapter(choresToAllocate);
+        adapter = new AddChoreAdapter(choresToAllocate, this);
         recView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recView.setAdapter(adapter);
 
