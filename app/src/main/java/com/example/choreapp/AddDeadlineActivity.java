@@ -1,10 +1,12 @@
 package com.example.choreapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,12 +16,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -45,6 +51,7 @@ public class AddDeadlineActivity extends AppCompatActivity {
      * new variables for date picker
      */
     private DatePicker datePicker;
+    private Spinner dayPicker;
     private Calendar calendar;
     private TextView dateView;
     private int year, month, day;
@@ -62,6 +69,7 @@ public class AddDeadlineActivity extends AppCompatActivity {
         Intent intent = getIntent();
         houseID = intent.getStringExtra(AddHouseMemberActivity.HOUSE_ID);
 
+        dayPicker = (Spinner) findViewById(R.id.days);
         dateView = (TextView) findViewById(R.id.textView3);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -135,6 +143,7 @@ public class AddDeadlineActivity extends AppCompatActivity {
      *
      * @param view is used for the event handling of the submit button.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void submitDates(View view) {
         Intent intent = new Intent(this, ChoreListActivity.class);
 
@@ -153,8 +162,35 @@ public class AddDeadlineActivity extends AppCompatActivity {
         selectedTime = selectedHour + ":" +selectedMin;
         dateView.setText(selectedTime);
 
-        String finishedDate = selectedDate + " " + selectedTime + ":0";
+        String day = String.valueOf(dayPicker.getSelectedItem());
+        String time = selectedTime + ":0";
+        DayOfWeek dayOfWeek;
+        if(day.equals("Monday")) {
+            dayOfWeek = DayOfWeek.MONDAY;
+        } else if(day.equals("Tuesday")) {
+            dayOfWeek = DayOfWeek.TUESDAY;
+        } else if(day.equals("Wednesday")) {
+            dayOfWeek = DayOfWeek.WEDNESDAY;
+        } else if(day.equals("Thursday")) {
+            dayOfWeek = DayOfWeek.THURSDAY;
+        } else if(day.equals("Friday")) {
+            dayOfWeek = DayOfWeek.FRIDAY;
+        } else if(day.equals("Saturday")) {
+            dayOfWeek = DayOfWeek.SATURDAY;
+        } else {
+            dayOfWeek = DayOfWeek.SUNDAY;
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        LocalDate ld = LocalDate.now();
+        ld = ld.with(TemporalAdjusters.next(dayOfWeek));
+        String finishedDate = ld.format(dtf) + " " + time;
         mRef.child("groups").child(houseID).child("deadline").setValue(finishedDate);
+        mRef.child("groups").child(houseID).child("dlDay").setValue(day);
+        mRef.child("groups").child(houseID).child("dlTime").setValue(time);
+        mRef.child("groups").child(houseID).child("reset").setValue(1);
+        //String finishedDate = selectedDate + " " + selectedTime + ":0";
+        //mRef.child("groups").child(houseID).child("deadline").setValue(finishedDate);
         writeString(this, houseID);
         startActivity(intent);
     }

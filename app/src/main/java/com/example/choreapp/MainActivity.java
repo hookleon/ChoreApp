@@ -63,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
         final ImageView imgChoreRoulette = findViewById(R.id.imageView);
 
         imgChoreRoulette.setVisibility(View.VISIBLE);
-        imgChoreRoulette.setBackgroundResource(R.drawable.ic_chores0);
+        imgChoreRoulette.setBackgroundResource(R.drawable.chores0);
 
         // Attempts login 4 times in 2 seconds
         new CountDownTimer(2000, 500) {
             public void onTick(long millisUntilFinished) {
-                attemptLogin(houseID);
+                //attemptLogin(houseID);
             }
             public void onFinish() {
                 Button btnCreate = findViewById(R.id.btnCreate);

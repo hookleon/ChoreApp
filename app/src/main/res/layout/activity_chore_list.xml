@@ -6,29 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ChoreListActivity">
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:onClick="assignChores"
-        android:text="Refresh Chores"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recView3"
         android:layout_width="345dp"
         android:layout_height="301dp"
+        android:layout_marginTop="76dp"
         app:layout_constraintBottom_toTopOf="@+id/textHID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintTop_toTopOf="@+id/textHouseName" />
 
     <TextView
         android:id="@+id/textHouseName"
@@ -180,5 +167,13 @@
             android:textColor="@android:color/white"
             android:textSize="22sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

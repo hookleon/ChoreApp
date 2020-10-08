@@ -27,6 +27,15 @@
         <item>Add your own</item>
     </string-array>
 
+    <string-array name="days_of_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
     <!-- Chore List Activity -->
     <string name="button_copy_hid">Copy</string>
     <string name="label_hid">HID: </string>

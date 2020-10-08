@@ -7,6 +7,7 @@
 package com.example.choreapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -17,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -30,6 +32,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +64,8 @@ public class ChoreListActivity extends AppCompatActivity {
     private Runnable runnable;
     private String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
     private String deadline;
+    private String dsDay;
+    private String dsTime;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,6 +150,7 @@ public class ChoreListActivity extends AppCompatActivity {
         );
 
         mRef.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
@@ -158,12 +167,14 @@ public class ChoreListActivity extends AppCompatActivity {
      * The house members and their chores are then displayed in a recyclerview.
      * @param dataSnapshot a snapshot of the database allowing use of information there.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showData(DataSnapshot dataSnapshot) {
         //clears both members and chores to allocate so they can be updated from the database
         members.clear();
         choresToAllocate.clear();
         TextView dueText = findViewById(R.id.deadLineText);
-        String dsDeadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
+
+        /*String dsDeadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
         deadline = dsDeadline;
         System.out.println(deadline);
         String addedTime = "";
@@ -173,7 +184,12 @@ public class ChoreListActivity extends AppCompatActivity {
         else{
             addedTime = "am";
         }
-        dueText.setText("Chore Deadline: " + dsDeadline.substring(0, dsDeadline.length()-2) + addedTime);
+        dueText.setText("Chore Deadline: " + dsDeadline.substring(0, dsDeadline.length()-2) + addedTime);*/
+
+        dsDay = (String)dataSnapshot.child("groups").child(houseID).child("dlDay").getValue();
+        dsTime = (String)dataSnapshot.child("groups").child(houseID).child("dlTime").getValue();
+
+        deadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
         deadLineCountdown();
 
         String houseName = dataSnapshot.child("groups").child(houseID).child("name").getValue(String.class);
@@ -210,19 +226,20 @@ public class ChoreListActivity extends AppCompatActivity {
             chores = dsChores.child(String.valueOf(i)).getValue(String.class);
             choresToAllocate.add(chores);
         }
+        assignChores();
         adapter.notifyDataSetChanged();
     }
 
     /**
      * The random allocation of chores to household members
-     * @param view view used for the event handling of the refresh button
      */
-    public void assignChores(View view) {
+    public void assignChores() {
         // Randomly assigns chores to members
         Random rand = new Random();
         int r;
         int maxChores = choresToAllocate.size() / members.size() + 1;
 
+        mRef.child("groups").child(houseID).child("firstTime").setValue(0);
         // remove all previous chores before allocating chores
         for (int i = 0; i < members.size(); i++) {
             members.get(i).resetChores();
@@ -237,9 +254,9 @@ public class ChoreListActivity extends AppCompatActivity {
                     choresToAllocate.remove(r);
                 }
             } else {
-                for(int i = 0; i < choresToAllocate.size(); i++) {
+                for (int i = 0; i < choresToAllocate.size(); i++) {
                     r = rand.nextInt(members.size());
-                    if(members.get(r).getChores().size() < maxChores) {
+                    if (members.get(r).getChores().size() < maxChores) {
                         members.get(r).addChore(choresToAllocate.get(i));
                         choresToAllocate.remove(i);
                     }
@@ -282,6 +299,7 @@ public class ChoreListActivity extends AppCompatActivity {
         final TextView seconds = findViewById(R.id.seconds_text);
 
         runnable = new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
                 try {
@@ -306,6 +324,29 @@ public class ChoreListActivity extends AppCompatActivity {
                         System.out.println(seconds);
 
                     } else {
+                        /*DayOfWeek dayOfWeek;
+                        if(dsDay.equals("Monday")) {
+                            dayOfWeek = DayOfWeek.MONDAY;
+                        } else if(dsDay.equals("Tuesday")) {
+                            dayOfWeek = DayOfWeek.TUESDAY;
+                        } else if(dsDay.equals("Wednesday")) {
+                            dayOfWeek = DayOfWeek.WEDNESDAY;
+                        } else if(dsDay.equals("Thursday")) {
+                            dayOfWeek = DayOfWeek.THURSDAY;
+                        } else if(dsDay.equals("Friday")) {
+                            dayOfWeek = DayOfWeek.FRIDAY;
+                        } else if(dsDay.equals("Saturday")) {
+                            dayOfWeek = DayOfWeek.SATURDAY;
+                        } else {
+                            dayOfWeek = DayOfWeek.SUNDAY;
+                        }
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        LocalDate ld = LocalDate.now();
+                        ld = ld.with(TemporalAdjusters.next(dayOfWeek));
+                        String finishedDate = ld.format(dtf) + " " + dsTime;
+                        mRef.child("groups").child(houseID).child("deadline").setValue(finishedDate);
+                        mRef.child("groups").child(houseID).child("firstTime").setValue(1);
+                        assignChores();*/
                         handler.removeCallbacks(runnable);
                     }
                 } catch (Exception e) {
