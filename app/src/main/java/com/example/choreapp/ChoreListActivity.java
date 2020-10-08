@@ -66,7 +66,13 @@ public class ChoreListActivity extends AppCompatActivity {
     private String deadline;
     private String dsDay;
     private String dsTime;
+    private String reset;
 
+    /**
+     * Creates a settings button in the toolbar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -74,6 +80,11 @@ public class ChoreListActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * If the settings button is pressed, it will send the user to the settings menu
+     * @param item the button selected
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -103,20 +114,17 @@ public class ChoreListActivity extends AppCompatActivity {
 
         // Opens menu when click on a member
         final Intent swapIntent = new Intent(this, SwapChoresActivity.class);
-        final Intent profIntent = new Intent(this, MemberProfileActivity.class);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Swap chores");
         builder.setItems(R.array.list_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(which == 0) {
-                    //profile
-                    builder.setTitle("Profile");
-                    startActivity(profIntent);
-                } else if(which == 1) {
                     //swap chores
                     builder.setTitle("Chores");
                     startActivity(swapIntent);
+                } else {
+                    return;
                 }
             }
         });
@@ -135,7 +143,6 @@ public class ChoreListActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Member get = members.get(position); //Want to get this member into the builder so that it can send it through the intent to either profile or chore swap activity
                         String id = get.getID();
-                        profIntent.putExtra(MEMB_ID, id);
                         swapIntent.putExtra(MEMB_ID, id);
                         swapIntent.putExtra(HOUSE_ID, houseID);
                         swapIntent.putExtra(MEMB_POS, String.valueOf(position));
@@ -174,7 +181,7 @@ public class ChoreListActivity extends AppCompatActivity {
         choresToAllocate.clear();
         TextView dueText = findViewById(R.id.deadLineText);
 
-        /*String dsDeadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
+        String dsDeadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
         deadline = dsDeadline;
         System.out.println(deadline);
         String addedTime = "";
@@ -184,12 +191,11 @@ public class ChoreListActivity extends AppCompatActivity {
         else{
             addedTime = "am";
         }
-        dueText.setText("Chore Deadline: " + dsDeadline.substring(0, dsDeadline.length()-2) + addedTime);*/
+        dueText.setText("Chore Deadline: " + dsDeadline.substring(0, dsDeadline.length()-2) + addedTime);
 
         dsDay = (String)dataSnapshot.child("groups").child(houseID).child("dlDay").getValue();
         dsTime = (String)dataSnapshot.child("groups").child(houseID).child("dlTime").getValue();
 
-        deadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
         deadLineCountdown();
 
         String houseName = dataSnapshot.child("groups").child(houseID).child("name").getValue(String.class);
@@ -226,6 +232,8 @@ public class ChoreListActivity extends AppCompatActivity {
             chores = dsChores.child(String.valueOf(i)).getValue(String.class);
             choresToAllocate.add(chores);
         }
+
+        reset = dataSnapshot.child("groups").child(houseID).child("reset").getValue(String.class);
         assignChores();
         adapter.notifyDataSetChanged();
     }
@@ -239,7 +247,11 @@ public class ChoreListActivity extends AppCompatActivity {
         int r;
         int maxChores = choresToAllocate.size() / members.size() + 1;
 
-        mRef.child("groups").child(houseID).child("firstTime").setValue(0);
+        if(reset.equals("n")) {
+            return;
+        }
+
+        mRef.child("groups").child(houseID).child("reset").setValue("n");
         // remove all previous chores before allocating chores
         for (int i = 0; i < members.size(); i++) {
             members.get(i).resetChores();
@@ -290,7 +302,8 @@ public class ChoreListActivity extends AppCompatActivity {
 
 
     /**
-     *
+     * Sets up the countdown before chores are due using a runnable. When the countdown ends, the
+     * assignChores() method is run and the deadline is set a week into the future
      */
     private void deadLineCountdown() {
         final TextView days = findViewById(R.id.days_text);
@@ -324,7 +337,7 @@ public class ChoreListActivity extends AppCompatActivity {
                         System.out.println(seconds);
 
                     } else {
-                        /*DayOfWeek dayOfWeek;
+                        DayOfWeek dayOfWeek;
                         if(dsDay.equals("Monday")) {
                             dayOfWeek = DayOfWeek.MONDAY;
                         } else if(dsDay.equals("Tuesday")) {
@@ -345,8 +358,8 @@ public class ChoreListActivity extends AppCompatActivity {
                         ld = ld.with(TemporalAdjusters.next(dayOfWeek));
                         String finishedDate = ld.format(dtf) + " " + dsTime;
                         mRef.child("groups").child(houseID).child("deadline").setValue(finishedDate);
-                        mRef.child("groups").child(houseID).child("firstTime").setValue(1);
-                        assignChores();*/
+                        mRef.child("groups").child(houseID).child("firstTime").setValue("y");
+                        assignChores();
                         handler.removeCallbacks(runnable);
                     }
                 } catch (Exception e) {

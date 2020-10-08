@@ -23,9 +23,10 @@ public class Member {
     private List<String> chores;
 
     /**
-     * @param name
-     * @param id
-     * @param houseID
+     * Member constructor requires a name, id and houseID
+     * @param name name of user
+     * @param id id of user
+     * @param houseID houseID of user
      */
     public Member(String name, String id, String houseID) {
         this.name = name;
