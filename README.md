@@ -17,6 +17,7 @@ Chore Roulette is an app that allows households to manage and assign chores to i
 **Our current release has these features:**
 * Simple choose a day and time for chores to change each week
 * Nice logo when app starts up
+* Small changes to make our app feel and look better
 
 [**User Documentation**](https://github.com/hookleon/ChoreRoulette/blob/master/User-documentation.pdf)
 
