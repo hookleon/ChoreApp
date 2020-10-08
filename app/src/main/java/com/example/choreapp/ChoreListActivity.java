@@ -165,6 +165,7 @@ public class ChoreListActivity extends AppCompatActivity {
         TextView dueText = findViewById(R.id.deadLineText);
         String dsDeadline = (String)dataSnapshot.child("groups").child(houseID).child("deadline").getValue();
         deadline = dsDeadline;
+        System.out.println(deadline);
         String addedTime = "";
         if(Integer.parseInt(deadline.substring(9,10)) >= 12){
             addedTime = "pm";
@@ -299,6 +300,11 @@ public class ChoreListActivity extends AppCompatActivity {
                         hours.setText(String.format("%02d", Hours));
                         minutes.setText(String.format("%02d", Minutes));
                         seconds.setText(String.format("%02d", Seconds));
+
+                        System.out.println(days);
+                        System.out.println(minutes);
+                        System.out.println(seconds);
+
                     } else {
                         handler.removeCallbacks(runnable);
                     }
